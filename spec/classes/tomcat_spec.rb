@@ -3,5 +3,12 @@
 require 'spec_helper'
 
 describe 'tomcat' do
-  it { should contain_class 'tomcat' }
+
+  context "with RedHat as OS" do
+    let (:facts) {{ :operatingsystem => 'redhat' }}
+    
+    it { should contain_package('tomcat').with_ensure('present') }
+    it { should contain_service('tomcat').with_ensure('present') }
+  end
+
 end
