@@ -12,5 +12,9 @@
 #
 class tomcat {
 
+  case $::operatingsystem {
+      redhat, centos: { include tomcat::redhat }
+      default: { fail("operatingsystem ${::operatingsystem} is not supported") }
+  }
 
 }
