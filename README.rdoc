@@ -1,0 +1,5 @@
+= puppet-tomcat module
+
+{<img src='https://codex.cegeka.be/jenkins/job/puppet-tomcat/badge/icon' />}[https://codex.cegeka.be/jenkins/job/puppet-tomcat/]
+
+This is the tomcat module.
