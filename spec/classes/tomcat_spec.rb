@@ -8,7 +8,7 @@ describe 'tomcat' do
     let (:facts) {{ :operatingsystem => 'redhat' }}
     
     it { should contain_package('tomcat').with_ensure('present') }
-    it { should contain_service('tomcat').with_ensure('present') }
+    it { should contain_service('tomcat').with_ensure('running') }
   end
 
 end
