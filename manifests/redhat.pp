@@ -5,7 +5,7 @@ class tomcat::redhat {
   }
 
   service { 'tomcat':
-    ensure     => present,
+    ensure     => running,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
