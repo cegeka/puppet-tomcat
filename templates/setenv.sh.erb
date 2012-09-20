@@ -1,0 +1,10 @@
+# file managed by puppet
+
+<% if has_variable?("tomcat::setenv") %>
+#
+# JVM tuning parameters
+#
+
+export JAVA_OPTS="-Xms${JAVA_XMS} -Xmx${JAVA_XMX} -XX:PermSize=${JAVA_PERMSIZE} -XX:MaxPermSize=${JAVA_MAXPERMSIZE} ${ADD_JAVA_OPTS}"
+
+<% end %>

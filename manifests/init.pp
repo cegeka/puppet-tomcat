@@ -10,7 +10,7 @@
 #
 # Sample Usage:
 #
-class tomcat {
+class tomcat($setenv=undef) {
 
   case $::operatingsystem {
       redhat, centos: { include tomcat::redhat }
