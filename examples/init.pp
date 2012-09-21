@@ -1,5 +1,4 @@
 tomcat::conf::setenv { 'setting env':
-
   java_options => [
     'JAVA_XMS="512m"',
     'JAVA_XMX="1024m"',
@@ -7,7 +6,6 @@ tomcat::conf::setenv { 'setting env':
     'JAVA_MAXPERMSIZE="512m"',
     'ADD_JAVA_OPTS="-Denv.MRT_ENVIRONMENT=s4t"'
   ],
-
 }
 
 tomcat::conf::role { 'adding tomcat role':

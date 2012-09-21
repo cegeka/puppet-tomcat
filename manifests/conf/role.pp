@@ -1,6 +1,6 @@
 define tomcat::conf::role($rolename, $ensure = present) {
 
-  include tomcat::conf
+  include tomcat::conf::conf
 
   if $ensure in [ present, absent ] {
     $ensure_real = $ensure
