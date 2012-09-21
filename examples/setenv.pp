@@ -9,14 +9,3 @@ tomcat::conf::setenv { 'setting env':
   ],
 
 }
-
-tomcat::conf::role { 'adding tomcat role':
-  rolename => 'bla'
-}
-
-tomcat::conf::user { 'adding user':
-  username => 'renta',
-  password => 'renta',
-  roles    => 'manager-gui'
-}
-
