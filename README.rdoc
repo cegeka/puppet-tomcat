@@ -2,4 +2,39 @@
 
 {<img src='https://codex.cegeka.be/jenkins/job/puppet-tomcat/badge/icon' />}[https://codex.cegeka.be/jenkins/job/puppet-tomcat/]
 
-This is the tomcat module.
+This is the tomcat module.  Use this module to install Apache Tomcat.
+
+== Recommended use
+
+=== Install tomcat
+
+  class { 'tomcat': }
+
+
+=== Set environment
+
+  tomcat::conf::setenv { 'setting tomcat env':
+    java_options => [
+      '-Xms512m',
+      '-Xmx1024m',
+      '-XX:PermSize=256m',
+      '-XX:MaxPermSize=512m',
+      '-Denv.ENVIRONMENT=test'
+    ],
+  }
+
+=== Add role to tomcat-users.xml
+
+  tomcat::conf::role { 'adding foo role':
+    rolename => 'foo'
+  }
+
+=== Add user to tomcat-users.xml
+
+  tomcat::conf::user { 'adding user':
+    username => 'tomcat',
+    password => 'tomcat',
+    roles    => 'manager-gui, foo'
+  }
+
+

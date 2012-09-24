@@ -1,0 +1,14 @@
+# file managed by puppet
+
+<% if has_variable?("java_options") %>
+#
+# JVM tuning parameters
+#
+<% options = "" %>
+<% scope.lookupvar('java_options').each do |option| %>
+<% options << option + " " %>
+<% end %>
+<% options = options.strip %>
+export JAVA_OPTS="<%= options %>"
+
+<% end %>
