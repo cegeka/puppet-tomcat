@@ -1,6 +1,6 @@
 # Class: tomcat
 #
-# This module manages tomcat
+# This module manages the installation of Apache Tomcat.
 #
 # Parameters:
 #
@@ -9,7 +9,7 @@
 # Requires:
 #
 # Sample Usage:
-# 
+#
 # class { 'tomcat': }
 #
 # tomcat::conf::setenv { 'setting tomcat env':
