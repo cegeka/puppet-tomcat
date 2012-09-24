@@ -14,7 +14,7 @@ tomcat::conf::role { 'adding foo role':
   rolename => 'foo'
 }
 
-tomcat::conf::user { 'adding user':
+tomcat::conf::user { 'adding tomcat user':
   username => 'tomcat',
   password => 'tomcat',
   roles    => 'manager-gui, foo'
