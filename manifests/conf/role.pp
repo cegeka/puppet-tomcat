@@ -12,7 +12,7 @@ define tomcat::conf::role($rolename, $ensure = present) {
   case $ensure_real {
     'absent':
       {
-        augeas { "tomcat-users/roles/$rolename/rm" :
+        augeas { "tomcat-users/role/$rolename/rm" :
           lens    => 'Xml.lns',
           incl    => '/opt/tomcat/conf/tomcat-users.xml',
           context => '/files/opt/tomcat/conf/tomcat-users.xml',

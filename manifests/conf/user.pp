@@ -1,4 +1,4 @@
-define tomcat::conf::user($username, $password, $roles, $ensure = present) {
+define tomcat::conf::user($username=undef, $password=undef, $roles=undef, $ensure = present) {
 
   include tomcat::conf::conf
 
@@ -16,6 +16,10 @@ define tomcat::conf::user($username, $password, $roles, $ensure = present) {
       }
     'present':
       {
+        if ($username == undef or $password == undef or $roles == undef) {
+          fail("Tomcat::Conf::User[${title}]: parameters username, password and roles must be defined")
+        }
+
         Augeas <| title == "tomcat-users/user/$username/rm"  |>
 
         augeas { "tomcat-users/user/$username/add" :

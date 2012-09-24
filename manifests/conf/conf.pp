@@ -3,7 +3,7 @@ class tomcat::conf::conf {
   include tomcat
 
   file { '/opt/tomcat/conf/tomcat-users.xml':
-    ensure  => present,
+    ensure  => file,
     owner   => 'tomcat',
     group   => 'tomcat',
     mode    => '0644',

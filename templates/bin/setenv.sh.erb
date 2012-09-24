@@ -4,7 +4,11 @@
 #
 # JVM tuning parameters
 #
-
-export JAVA_OPTS="-Xms${JAVA_XMS} -Xmx${JAVA_XMX} -XX:PermSize=${JAVA_PERMSIZE} -XX:MaxPermSize=${JAVA_MAXPERMSIZE} ${ADD_JAVA_OPTS}"
+<% options = "" %>
+<% scope.lookupvar('java_options').each do |option| %>
+<% options << option + " " %>
+<% end %>
+<% options = options.strip %>
+export JAVA_OPTS="<%= options %>"
 
 <% end %>
