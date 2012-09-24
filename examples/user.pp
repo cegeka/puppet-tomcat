@@ -1,5 +1,5 @@
-tomcat::conf::user { 'adding user':
-  username => 'renta',
-  password => 'renta',
-  roles    => 'manager-gui'
+tomcat::conf::user { 'adding tomcat user':
+  username => 'tomcat',
+  password => 'tomcat',
+  roles    => 'manager-gui, foo'
 }

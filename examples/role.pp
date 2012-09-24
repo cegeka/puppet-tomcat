@@ -1,3 +1,3 @@
-tomcat::conf::role { 'adding tomcat role':
-  rolename => 'bla'
+tomcat::conf::role { 'adding foo role':
+  rolename => 'foo'
 }
