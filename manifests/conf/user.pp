@@ -12,7 +12,7 @@ define tomcat::conf::user($username=undef, $password=undef, $roles=undef, $ensur
   case $ensure_real {
     'absent':
       {
-        Augeas <| title == "tomcat-users/user/$username/rm"  |>
+        Augeas <| title == "tomcat-users/user/$username/rm" |>
       }
     'present':
       {
@@ -20,7 +20,7 @@ define tomcat::conf::user($username=undef, $password=undef, $roles=undef, $ensur
           fail("Tomcat::Conf::User[${title}]: parameters username, password and roles must be defined")
         }
 
-        Augeas <| title == "tomcat-users/user/$username/rm"  |>
+        Augeas <| title == "tomcat-users/user/$username/rm" |>
 
         augeas { "tomcat-users/user/$username/add" :
           lens    => 'Xml.lns',
