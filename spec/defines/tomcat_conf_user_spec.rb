@@ -5,7 +5,7 @@ describe 'tomcat::conf::user' do
   context 'adding tomcat user' do
     context 'without the required parameters' do
       let (:title) { 'add tomcat user' }
-      let (:facts) {{ :operatingsystem => 'redhat' }}
+      let (:facts) { { :operatingsystem => 'redhat' } }
 
       it {
         expect { subject }.to raise_error(

@@ -4,7 +4,7 @@ describe 'tomcat::conf::role' do
 
   context 'adding tomcat role' do
     let (:title) { 'add foo role' }
-    let (:facts) {{ :operatingsystem => 'redhat' }}
+    let (:facts) { { :operatingsystem => 'redhat' } }
     let(:params) { { :rolename => 'foo' } }
 
     it { should contain_class('tomcat') }
