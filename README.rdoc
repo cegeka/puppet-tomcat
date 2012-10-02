@@ -10,7 +10,6 @@ This is the tomcat module.  Use this module to install Apache Tomcat.
 
   class { 'tomcat': }
 
-
 === Set environment
 
   tomcat::conf::setenv { 'setting tomcat env':
