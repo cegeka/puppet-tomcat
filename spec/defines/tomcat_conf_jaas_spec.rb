@@ -5,7 +5,7 @@ describe 'tomcat::conf::jaas' do
   context 'security setup' do
     let (:title) { 'security setup' }
     let (:facts) { { :operatingsystem => 'redhat' } }
-    let(:params) { { :loginconf => "JAAS { foo bar }", :java_options => [ '-Dsecurity.url=http://localhost:8080'] } }
+    let(:params) { { :loginconf => "JAAS { foo bar }" } }
 
     it { should contain_class('tomcat') }
 
