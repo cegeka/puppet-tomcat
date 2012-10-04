@@ -1,12 +1,9 @@
-define tomcat::conf::jaas($loginconf=undef, $java_options=undef) {
+define tomcat::conf::jaas($loginconf=undef) {
 
   include tomcat
 
   if ($loginconf == undef) {
     fail("Tomcat::Conf::Jaas[${title}]: parameter loginconf must be defined")
-  }
-  if ($java_options == undef) {
-    fail("Tomcat::Conf::Jaas[${title}]: parameter java_options must be defined")
   }
 
   $auth_login_conf = '/opt/tomcat/conf/login.conf'
@@ -19,9 +16,5 @@ define tomcat::conf::jaas($loginconf=undef, $java_options=undef) {
     mode    => '0644',
     require => Class['tomcat'],
   }
-
-  #call generic define for setting jvm option -Djava.security.auth.login.config
-
-  #call generic define for setting java options parameter
 
 }
