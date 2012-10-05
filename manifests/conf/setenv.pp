@@ -9,6 +9,7 @@ define tomcat::conf::setenv($java_options=undef) {
     group   => 'tomcat',
     mode    => '0754',
     require => Class['tomcat'],
+    notify  => Service['tomcat']
   }
 
 }
