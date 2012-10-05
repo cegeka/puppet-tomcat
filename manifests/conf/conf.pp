@@ -7,7 +7,8 @@ class tomcat::conf::conf {
     owner   => 'tomcat',
     group   => 'tomcat',
     mode    => '0644',
-    require => Class['tomcat']
+    require => Class['tomcat'],
+    notify  => Service['tomcat']
   }
 
 }
