@@ -15,6 +15,7 @@ define tomcat::conf::jaas($loginconf=undef) {
     group   => 'tomcat',
     mode    => '0644',
     require => Class['tomcat'],
+    notify  => Service['tomcat']
   }
 
 }
