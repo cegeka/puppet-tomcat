@@ -1,4 +1,4 @@
-class tomcat::redhat {
+define tomcat::redhat::server() {
 
   package { 'tomcat':
     ensure => present,
