@@ -1,0 +1,2 @@
+define tomcat::server() {
+}
