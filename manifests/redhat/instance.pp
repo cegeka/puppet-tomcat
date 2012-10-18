@@ -1,16 +1,21 @@
 class tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_instance_uid, $tomcat_instance_gid, $tomcat_instance_password) {
 
-  $real_tomcat_instance_dir = "${tomcat::tomcat_instance_root_dir}/${tomcat::tomcat_instance_name}"
-  $tomcat_instance_name = "tomcat${tomcat::tomcat_instance_number}"
+  include tomcat
+
+  $tomcat_instance_name = "tomcat${tomcat::redhat::instance::tomcat_instance_number}"
+  $real_tomcat_instance_dir = "${tomcat::redhat::instance::tomcat_instance_root_dir}/${tomcat::redhat::instance::tomcat_instance_name}"
+
+  notice("real_tomcat_instance_dir = ${real_tomcat_instance_dir}")
+  notice("tomcat_instance_name= ${tomcat_instance_name}")
 
   include users
 
   users::localgroup { $tomcat_instance_name:
-    gid => $tomcat::instance::tomcat_instance_gid,
+    gid => $tomcat::redhat::instance::tomcat_instance_gid,
   }
 
   users::localuser { $tomcat_instance_name:
-    uid        => $tomcat::instance::tomcat_instance_uid,
+    uid        => $tomcat::redhat::instance::tomcat_instance_uid,
     logingroup => $tomcat_instance_name,
     home       => $real_tomcat_instance_dir,
     comment    => "Tomcat Instance user $tomcat_instance_name",
