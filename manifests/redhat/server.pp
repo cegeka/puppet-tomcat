@@ -1,15 +1,15 @@
-define tomcat::redhat::server() {
+class tomcat::redhat::server($tomcat_version) {
 
-  package { 'tomcat':
+  package { "cegeka-tomcat$tomcat_version":
     ensure => present,
   }
 
-  service { 'tomcat':
+  service { "tomcat$tomcat_version":
     ensure     => running,
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => Package['tomcat'],
+    require    => Package["cegeka-tomcat$tomcat_version"],
   }
 
 }
