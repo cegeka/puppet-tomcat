@@ -1,5 +1,4 @@
 
-#class { 'tomcat::instance':
 tomcat::instance { 'tomcat00 instance':
   tomcat_instance_root_dir => '/data',
   tomcat_instance_number   => '00',
@@ -8,10 +7,10 @@ tomcat::instance { 'tomcat00 instance':
   tomcat_instance_password => '$1$JOOZyS5c$JDJq9SdMWVZi8IRT/Lh2H1',
 }
 
-#class { 'tomcat::server':
 tomcat::server { 'tomcat server':
-  tomcat_version => '6',
+  tomcat_version => '6.0.32',
 }
+
 
 tomcat::conf::setenv { 'setting tomcat env':
   java_options => [
