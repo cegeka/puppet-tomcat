@@ -1,4 +1,4 @@
-class tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_instance_uid, $tomcat_instance_gid) {
+class tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_instance_uid, $tomcat_instance_gid, $tomcat_instance_password) {
 
   $real_tomcat_instance_dir = "${tomcat::tomcat_instance_root_dir}/${tomcat::tomcat_instance_name}"
   $tomcat_instance_name = "tomcat${tomcat::tomcat_instance_number}"
@@ -14,7 +14,7 @@ class tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_numbe
     logingroup => $tomcat_instance_name,
     home       => $real_tomcat_instance_dir,
     comment    => "Tomcat Instance user $tomcat_instance_name",
-    password   => generate('/usr/bin/openssl', 'passwd', '-1', $tomcat_instance_name),
+    password   => $tomcat_instance_password,
   }
 
   file { [ "$real_tomcat_instance_dir/hosts", "$real_tomcat_instance_dir/hosts/localhost", "$real_tomcat_instance_dir/hosts/localhost/webapps"]:

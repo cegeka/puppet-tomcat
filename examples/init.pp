@@ -5,6 +5,7 @@ tomcat::instance { 'tomcat00 instance':
   tomcat_instance_number   => '00',
   tomcat_instance_uid      => '1001',
   tomcat_instance_gid      => '1002',
+  tomcat_instance_password => '$1$JOOZyS5c$JDJq9SdMWVZi8IRT/Lh2H1',
 }
 
 #class { 'tomcat::server':
