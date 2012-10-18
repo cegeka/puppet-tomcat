@@ -1,5 +1,8 @@
 class tomcat::redhat::server($tomcat_version) {
 
+  #regex for getting first part...
+  $major_version = ''
+
   package { "cegeka-tomcat$tomcat_version":
     ensure => present,
   }
