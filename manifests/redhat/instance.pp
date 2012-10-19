@@ -1,7 +1,16 @@
-define tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_instance_uid, $tomcat_instance_gid, $tomcat_instance_password) {
+define tomcat::redhat::instance(
+    $tomcat_instance_root_dir,
+    $tomcat_instance_number,
+    $tomcat_instance_uid,
+    $tomcat_instance_gid,
+    $tomcat_instance_password,
+    $tomcat_version,
+    $tomcat_options=undef,
+  ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
   $real_tomcat_instance_dir = "${tomcat_instance_root_dir}/${tomcat_instance_name}"
+  $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)$','\1')
 
   debug("tomcat_instance_name= ${tomcat_instance_name}")
   debug("real_tomcat_instance_dir = ${real_tomcat_instance_dir}")
@@ -111,4 +120,23 @@ define tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_numb
     require => File["$real_tomcat_instance_dir/conf"]
   }
 
+  service { "${tomcat_instance_name}":
+    ensure     => running,
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => Package["cegeka-tomcat${tomcat_major_version}"],
+  }
+
+  if $tomcat_options {
+    file { "${real_tomcat_instance_dir}/conf/config.sh":
+      ensure  => file,
+      content => template("${module_name}/conf/config.sh.erb"),
+      owner   => $tomcat_instance_name,
+      group   => $tomcat_instance_name,
+      mode    => '0754',
+      notify  => Service[$tomcat_instance_name],
+      require => File["$real_tomcat_instance_dir/conf"]
+    }
+  }
 }
