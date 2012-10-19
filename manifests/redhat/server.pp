@@ -9,12 +9,4 @@ define tomcat::redhat::server($tomcat_version) {
     ensure => $tomcat_version,
   }
 
-  service { "tomcat$tomcat_major_version":
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
-    require    => Package["cegeka-tomcat$tomcat_major_version"],
-  }
-
 }
