@@ -1,11 +1,12 @@
 $tomcat_version = '6.0.32'
+$tomcat_instance_root_dir = '/data'
 
 tomcat::server { 'tomcat server':
-  tomcat_version => '6.0.32',
+  tomcat_version => $tomcat_version,
 }
 
 tomcat::instance { 'tomcat00 instance':
-  tomcat_instance_root_dir => '/data',
+  tomcat_instance_root_dir => $tomcat_instance_root_dir,
   tomcat_instance_number   => '00',
   tomcat_instance_gid      => '1001',
   tomcat_instance_uid      => '1101',
@@ -13,7 +14,7 @@ tomcat::instance { 'tomcat00 instance':
 }
 
 tomcat::instance { 'tomcat01 instance':
-  tomcat_instance_root_dir => '/data',
+  tomcat_instance_root_dir => $tomcat_instance_root_dir,
   tomcat_instance_number   => '01',
   tomcat_instance_gid      => '1002',
   tomcat_instance_uid      => '1102',
@@ -30,13 +31,25 @@ tomcat::instance { 'tomcat01 instance':
 #  ],
 #}
 
-#tomcat::conf::role { 'adding foo role':
-#  rolename => 'foo'
-#}
+tomcat::instance::role { 'adding foo role':
+  tomcat_instance_root_dir => $tomcat_instance_root_dir,
+  tomcat_instance_number   => '00',
+  rolename                 => 'foo'
+}
 
-#tomcat::conf::user { 'adding tomcat user':
-#  username => 'tomcat',
-#  password => 'tomcat',
-#  roles    => 'manager-gui, foo'
-#}
+tomcat::instance::user { 'adding tomcat user':
+  tomcat_instance_root_dir => $tomcat_instance_root_dir,
+  tomcat_instance_number   => '00',
+  username                 => 'tomcat',
+  password                 => 'tomcat',
+  roles                    => 'manager-gui, foo'
+}
 
+tomcat::instance::jaas { 'setting tomcat jaas config':
+  tomcat_instance_root_dir => $tomcat_instance_root_dir,
+  tomcat_instance_number   => '00',
+  loginconf                => "simbaJAAS {
+        org.test.jaas.loginmodule.DatabaseLoginModule SUFFICIENT debug=true;
+        org.test.jaas.loginmodule.FallbackDatabaseLoginModule REQUIRED debug=true;
+    };\n"
+}
