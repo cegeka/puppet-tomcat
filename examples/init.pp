@@ -19,10 +19,10 @@ tomcat::instance { 'tomcat00':
       'SERVER_PORT'           => '8050',
       'HTTP_PORT'             => '8080',
       'AJP_PORT'              => '8010',
-      'TOMCAT_INSTANCE_PROPS' => '"-Xmx256m -XX:MaxPermSize=128m\ 
-        -Dtn.tomcat.server.port=$SERVER_PORT -Dtn.tomcat.connector.http.port=$HTTP_PORT\
-        -Dtn.tomcat.connector.ajp.port=$AJP_PORT\
-        -Dtn.tomcat.connector.ajp.maxThreads=200\
+      'TOMCAT_INSTANCE_PROPS' => '"-Xmx256m -XX:MaxPermSize=128m
+        -Dtn.tomcat.server.port=$SERVER_PORT -Dtn.tomcat.connector.http.port=$HTTP_PORT
+        -Dtn.tomcat.connector.ajp.port=$AJP_PORT
+        -Dtn.tomcat.connector.ajp.maxThreads=200
         -Dtn.tomcat.engine.jvmRoute=${TOMCAT_NAME}${TOMCAT_NUMBER}"'
   }
 }
