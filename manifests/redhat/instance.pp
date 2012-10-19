@@ -8,6 +8,7 @@ define tomcat::redhat::instance(
     $tomcat_options=undef,
   ) {
 
+  $tomcat_installation_dir = "/opt/apache-tomcat-${::tomcat_version}"
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
   $real_tomcat_instance_dir = "${tomcat_instance_root_dir}/${tomcat_instance_name}"
   $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)$','\1')
@@ -120,7 +121,23 @@ define tomcat::redhat::instance(
     require => File["$real_tomcat_instance_dir/conf"]
   }
 
-  service { "${tomcat_instance_name}":
+  file { "/etc/init.d/${tomcat_instance_name}":
+    ensure => file,
+    source => "puppet:///modules/${module_name}/etc/init.d/tomcat",
+    mode   => '0755',
+    owner  => 'root',
+    group  => 'root'
+  }
+
+  file { "/etc/sysconfig/${tomcat_instance_name}":
+    ensure  => file,
+    content => template("${module_name}/etc/sysconfig/tomcat.erb"),
+    mode    => '0755',
+    owner   => 'root',
+    group   => 'root'
+  }
+
+  service { $tomcat_instance_name:
     ensure     => running,
     enable     => true,
     hasstatus  => true,
