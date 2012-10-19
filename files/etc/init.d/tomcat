@@ -25,7 +25,7 @@ TOMCAT_NAME=$(basename $REALNAME)
 
 id -u "$TOMCAT_NAME" > /dev/null 2>&1 || error "Invalid user: $TOMCAT_NAME"
 
-TOMCAT_NUMBER=$(echo $TOMCAT_NAME | sed s/^tomcat//)
+export TOMCAT_NUMBER=$(echo $TOMCAT_NAME | sed s/^tomcat//)
 
 if [ "$TOMCAT_NUMBER" = "" ]; then
 	echo Invalid tomcat number: $TOMCAT_NUMBER
