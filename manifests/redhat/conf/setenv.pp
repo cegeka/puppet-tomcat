@@ -1,6 +1,6 @@
 define tomcat::conf::setenv($java_options=undef) {
 
-  include tomcat
+  #include tomcat
 
   file { '/opt/tomcat/bin/setenv.sh':
     ensure  => file,
