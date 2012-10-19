@@ -1,3 +1,4 @@
+$tomcat_version = '6.0.32'
 
 tomcat::server { 'tomcat server':
   tomcat_version => '6.0.32',
@@ -19,16 +20,15 @@ tomcat::instance { 'tomcat01 instance':
   tomcat_instance_password => '$1$8WHwrwUf$JmAywFDPdE4CwyjaNHn010',
 }
 
-
-#tomcat::conf::setenv { 'setting tomcat env':
-#  java_options => [
-#    '-Xms512m',
-#    '-Xmx1024m',
-#    '-XX:PermSize=256m',
-#    '-XX:MaxPermSize=512m',
-#    '-Denv.ENVIRONMENT=test'
-#  ],
-#}
+tomcat::conf::setenv { 'setting tomcat env':
+  java_options => [
+    '-Xms512m',
+    '-Xmx1024m',
+    '-XX:PermSize=256m',
+    '-XX:MaxPermSize=512m',
+    '-Denv.ENVIRONMENT=test'
+  ],
+}
 
 #tomcat::conf::role { 'adding foo role':
 #  rolename => 'foo'
