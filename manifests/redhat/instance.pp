@@ -1,12 +1,12 @@
 class tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_instance_uid, $tomcat_instance_gid, $tomcat_instance_password) {
 
-  include tomcat
+  #include tomcat
 
   $tomcat_instance_name = "tomcat${tomcat::redhat::instance::tomcat_instance_number}"
   $real_tomcat_instance_dir = "${tomcat::redhat::instance::tomcat_instance_root_dir}/${tomcat::redhat::instance::tomcat_instance_name}"
 
-  notice("real_tomcat_instance_dir = ${real_tomcat_instance_dir}")
-  notice("tomcat_instance_name= ${tomcat_instance_name}")
+  debug("tomcat_instance_name= ${tomcat_instance_name}")
+  debug("real_tomcat_instance_dir = ${real_tomcat_instance_dir}")
 
   include users
 
