@@ -1,9 +1,16 @@
-define tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_instance_uid, $tomcat_instance_gid, $tomcat_instance_password) {
-
-  $tomcat_installation_dir = "/opt/apache-tomcat-${tomcat_version}"
+define tomcat::redhat::instance(
+    $tomcat_instance_root_dir,
+    $tomcat_instance_number,
+    $tomcat_instance_uid,
+    $tomcat_instance_gid,
+    $tomcat_instance_password,
+    $tomcat_version,
+    $tomcat_options=undef,
+  ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
   $real_tomcat_instance_dir = "${tomcat_instance_root_dir}/${tomcat_instance_name}"
+  $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)$','\1')
 
   debug("tomcat_instance_name= ${tomcat_instance_name}")
   debug("real_tomcat_instance_dir = ${real_tomcat_instance_dir}")
@@ -113,20 +120,23 @@ define tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_numb
     require => File["$real_tomcat_instance_dir/conf"]
   }
 
-  file { "/etc/init.d/${tomcat_instance_name}":
-    ensure  => file,
-    source  => "puppet:///modules/${module_name}/etc/init.d/tomcat",
-    mode    => '0755',
-    owner   => 'root',
-    group   => 'root'
+  service { "${tomcat_instance_name}":
+    ensure     => running,
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => Package["cegeka-tomcat${tomcat_major_version}"],
   }
 
-  file { "/etc/sysconfig/${tomcat_instance_name}":
-    ensure  => file,
-    content => template("${module_name}/etc/sysconfig/tomcat.erb"),
-    mode    => '0755',
-    owner   => 'root',
-    group   => 'root'
+  if $tomcat_options {
+    file { "${real_tomcat_instance_dir}/conf/config.sh":
+      ensure  => file,
+      content => template("${module_name}/conf/config.sh.erb"),
+      owner   => $tomcat_instance_name,
+      group   => $tomcat_instance_name,
+      mode    => '0754',
+      notify  => Service[$tomcat_instance_name],
+      require => File["$real_tomcat_instance_dir/conf"]
+    }
   }
-
 }
