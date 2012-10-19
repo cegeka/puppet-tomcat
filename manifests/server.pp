@@ -1,10 +1,8 @@
 define tomcat::server($tomcat_version) {
 
-  include tomcat
-
   case $::operatingsystem {
       redhat, centos: {
-        class { 'tomcat::redhat::server':
+        tomcat::redhat::server { "${name}":
           tomcat_version => $tomcat_version,
         }
       }

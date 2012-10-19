@@ -1,4 +1,4 @@
-class tomcat::redhat::server($tomcat_version) {
+define tomcat::redhat::server($tomcat_version) {
 
   $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)$','\1')
 
