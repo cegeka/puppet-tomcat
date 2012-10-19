@@ -1,0 +1,91 @@
+#!/bin/bash
+#
+# tomcat	This shell script takes care of starting
+#		and stopping tomcat.
+#
+# The next two comments are read by chkconfig:
+# chkconfig: 3 79 11
+# description:	tomcat server.
+#
+# I don't know how the following works.
+# p-rocessname: tomcat01
+
+# Source function library.
+#. /etc/rc.d/init.d/functions
+
+# Source tomcat configuration.
+
+function error {
+    echo $1
+    exit 1
+}
+
+REALNAME=$(readlink -f $0)
+TOMCAT_NAME=$(basename $REALNAME)
+
+id -u "$TOMCAT_NAME" > /dev/null 2>&1 || error "Invalid user: $TOMCAT_NAME"
+
+TOMCAT_NUMBER=$(echo $TOMCAT_NAME | sed s/^tomcat//)
+
+if [ "$TOMCAT_NUMBER" = "" ]; then
+	echo Invalid tomcat number: $TOMCAT_NUMBER
+	exit 1
+fi
+
+export TOMCAT_NAME
+
+echo Using TOMCAT_NAME=$TOMCAT_NAME
+
+if [ -f /etc/sysconfig/tomcat ]; then
+	. /etc/sysconfig/tomcat
+fi
+
+if [ -f /etc/sysconfig/$TOMCAT_NAME ]; then
+	. /etc/sysconfig/$TOMCAT_NAME
+fi
+
+if [ -f $CATALINA_BASE/conf/config.sh ]; then
+	. $CATALINA_BASE/conf/config.sh
+fi
+
+export CATALINA_OPTS="$TOMCAT_JVM_PROPS $TOMCAT_ENV_PROPS $TOMCAT_INSTANCE_PROPS"
+
+start(){
+	echo Starting $TOMCAT_NAME ...
+	su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh start"
+	ret=$?
+	return $ret
+}
+
+stop(){
+	echo Stopping $TOMCAT_NAME ...
+	su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh stop"
+	ret=$?
+        sleep 5
+        su $TOMCAT_NAME -c "pkill -u $TOMCAT_NAME java"
+	return $ret
+}
+ 
+restart(){
+    stop
+    start
+}
+
+# See how we were called.
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    restart
+    ;;
+  *)
+    echo $"Usage: $0 {start|stop|restart}"
+    exit 1
+esac
+
+exit $?
+
