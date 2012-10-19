@@ -14,7 +14,7 @@ define tomcat::instance(
 
   case $::operatingsystem {
     redhat, centos: {
-      tomcat::redhat::instance { "${name}":
+      tomcat::redhat::instance { $name:
         tomcat_instance_root_dir => $tomcat_instance_root_dir,
         tomcat_instance_number   => $tomcat_instance_number,
         tomcat_instance_uid      => $tomcat_instance_uid,
