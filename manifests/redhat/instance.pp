@@ -8,13 +8,15 @@ define tomcat::redhat::instance(
     $tomcat_options=undef,
   ) {
 
-  $tomcat_installation_dir = "/opt/apache-tomcat-${::tomcat_version}"
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
+  $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)-(\d+)$','\1')
+  $tomcat_version_withoutrelease = regsubst($tomcat_version, '^(\d+\.\d+\.\d+)-.*$','\1')
   $real_tomcat_instance_dir = "${tomcat_instance_root_dir}/${tomcat_instance_name}"
-  $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)$','\1')
+  $tomcat_installation_dir = "/opt/tomcat-${tomcat_version_withoutrelease}"
 
   debug("tomcat_instance_name= ${tomcat_instance_name}")
   debug("real_tomcat_instance_dir = ${real_tomcat_instance_dir}")
+  notice("tomcat_version_withoutrelease = ${tomcat_version_withoutrelease}")
 
   include users
 
@@ -119,6 +121,13 @@ define tomcat::redhat::instance(
     source  => "puppet:///modules/${module_name}/instance/conf/web.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
+  }
+
+  file { "$real_tomcat_instance_dir/bin/catalina.sh":
+    ensure  => file,
+    source  => "puppet:///modules/${module_name}/instance/bin/catalina.sh",
+    mode    => '0644',
+    require => Users::Localuser[$tomcat_instance_name]
   }
 
   file { "/etc/init.d/${tomcat_instance_name}":
