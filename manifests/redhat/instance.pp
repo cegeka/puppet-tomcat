@@ -1,5 +1,7 @@
 define tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_instance_uid, $tomcat_instance_gid, $tomcat_instance_password) {
 
+  $tomcat_installation_dir = "/opt/apache-tomcat-${tomcat_version}"
+
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
   $real_tomcat_instance_dir = "${tomcat_instance_root_dir}/${tomcat_instance_name}"
 
@@ -109,6 +111,22 @@ define tomcat::redhat::instance($tomcat_instance_root_dir, $tomcat_instance_numb
     source  => "puppet:///modules/${module_name}/instance/conf/web.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
+  }
+
+  file { "/etc/init.d/${tomcat_instance_name}":
+    ensure  => file,
+    source  => "puppet:///modules/${module_name}/etc/init.d/tomcat",
+    mode    => '0755',
+    owner   => 'root',
+    group   => 'root'
+  }
+
+  file { "/etc/sysconfig/${tomcat_instance_name}":
+    ensure  => file,
+    content => template("${module_name}/etc/sysconfig/tomcat.erb"),
+    mode    => '0755',
+    owner   => 'root',
+    group   => 'root'
   }
 
 }
