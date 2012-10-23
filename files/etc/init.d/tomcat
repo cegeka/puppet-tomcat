@@ -11,7 +11,7 @@
 # p-rocessname: tomcat01
 
 # Source function library.
-#. /etc/rc.d/init.d/functions
+. /etc/rc.d/init.d/functions
 
 # Source tomcat configuration.
 
@@ -54,6 +54,9 @@ start(){
 	echo Starting $TOMCAT_NAME ...
 	su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh start"
 	ret=$?
+  sleep 2
+  pid="$(pgrep -u ${TOMCAT_NAME} java)"
+  echo ${pid} > /var/run/${TOMCAT_NAME}.pid
 	return $ret
 }
 
@@ -61,9 +64,32 @@ stop(){
 	echo Stopping $TOMCAT_NAME ...
 	su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh stop"
 	ret=$?
-        sleep 5
-        su $TOMCAT_NAME -c "pkill -u $TOMCAT_NAME java"
+  sleep 5
+  su $TOMCAT_NAME -c "pkill -u $TOMCAT_NAME java"
+  rm -f /var/run/${TOMCAT_NAME}.pid
 	return $ret
+}
+
+status(){
+  RETVAL="1"
+  if [ -f "/var/run/${TOMCAT_NAME}.pid" ]; then
+    read kpid < /var/run/${TOMCAT_NAME}.pid
+    if checkpid $kpid 2>&1; then
+      echo "$0 is already running (${kpid})"
+      RETVAL="0"
+    else
+      echo "lock file found but no process running for pid $kpid"
+    fi
+  else
+    pid="$(pgrep -u $TOMCAT_NAME java)"
+    if [ -n "$pid" ]; then
+      echo "$0 running (${pid}) but no PID file exists"
+      RETVAL="0"
+    else
+      echo "$0 is stopped"
+    fi
+  fi
+  return $RETVAL
 }
  
 restart(){
@@ -79,11 +105,14 @@ case "$1" in
   stop)
     stop
     ;;
+  status)
+    status
+    ;;
   restart)
     restart
     ;;
   *)
-    echo $"Usage: $0 {start|stop|restart}"
+    echo $"Usage: $0 {start|stop|status|restart}"
     exit 1
 esac
 
