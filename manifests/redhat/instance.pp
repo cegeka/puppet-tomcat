@@ -141,7 +141,8 @@ define tomcat::redhat::instance(
     owner   => 'root',
     group   => 'root',
     mode    => '0755',
-    content => template("${module_name}/etc/sysconfig/tomcat.erb")
+    content => template("${module_name}/etc/sysconfig/tomcat.erb"),
+    notify  => Service[$tomcat_instance_name]
   }
 
   service { $tomcat_instance_name:
