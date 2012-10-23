@@ -32,38 +32,33 @@ define tomcat::redhat::instance(
     password   => $tomcat_instance_password,
   }
 
+  File {
+    owner => $tomcat_instance_name,
+    group => $tomcat_instance_name
+  }
+
   file { [ "$real_tomcat_instance_dir/hosts", "$real_tomcat_instance_dir/hosts/localhost", "$real_tomcat_instance_dir/hosts/localhost/webapps"]:
     ensure => directory,
-    owner  => $tomcat_instance_name,
-    group  => $tomcat_instance_name,
     mode   => '0750'
   }
 
   file { [ "$real_tomcat_instance_dir/logs", "$real_tomcat_instance_dir/logs/webapps"]:
     ensure => directory,
-    owner  => $tomcat_instance_name,
-    group  => $tomcat_instance_name,
     mode   => '0750'
   }
 
   file { [ "$real_tomcat_instance_dir/temp", "$real_tomcat_instance_dir/work"]:
     ensure => directory,
-    owner  => $tomcat_instance_name,
-    group  => $tomcat_instance_name,
     mode   => '0750'
   }
 
   file { [ "$real_tomcat_instance_dir/conf", "$real_tomcat_instance_dir/conf/Catalina", "$real_tomcat_instance_dir/conf/Catalina/localhost" ]:
     ensure => directory,
-    owner  => $tomcat_instance_name,
-    group  => $tomcat_instance_name,
     mode   => '0750'
   }
 
   file { "$real_tomcat_instance_dir/conf/Catalina/localhost/host-manager.xml":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/conf/Catalina/localhost/host-manager.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf/Catalina/localhost"]
@@ -71,8 +66,6 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/Catalina/localhost/manager.xml":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/conf/Catalina/localhost/manager.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf/Catalina/localhost"]
@@ -80,8 +73,6 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/catalina.policy":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/conf/catalina.policy",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
@@ -89,8 +80,6 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/catalina.properties":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/conf/catalina.properties",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
@@ -98,8 +87,6 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/context.xml":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/conf/context.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
@@ -107,8 +94,6 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/logging.properties":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/conf/logging.properties",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
@@ -116,8 +101,6 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/server.xml":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/conf/server.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
@@ -125,8 +108,6 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/tomcat-users.xml":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/conf/tomcat-users.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
@@ -134,8 +115,6 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/web.xml":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/conf/web.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
@@ -143,8 +122,6 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/bin/catalina.sh":
     ensure  => file,
-    owner   => $tomcat_instance_name,
-    group   => $tomcat_instance_name,
     source  => "puppet:///modules/${module_name}/instance/bin/catalina.sh",
     mode    => '0644',
     require => Users::Localuser[$tomcat_instance_name]
@@ -152,18 +129,18 @@ define tomcat::redhat::instance(
 
   file { "/etc/init.d/${tomcat_instance_name}":
     ensure => file,
-    source => "puppet:///modules/${module_name}/etc/init.d/tomcat",
-    mode   => '0755',
     owner  => 'root',
-    group  => 'root'
+    group  => 'root',
+    mode   => '0755',
+    source => "puppet:///modules/${module_name}/etc/init.d/tomcat"
   }
 
   file { "/etc/sysconfig/${tomcat_instance_name}":
     ensure  => file,
-    content => template("${module_name}/etc/sysconfig/tomcat.erb"),
-    mode    => '0755',
     owner   => 'root',
-    group   => 'root'
+    group   => 'root',
+    mode    => '0755',
+    content => template("${module_name}/etc/sysconfig/tomcat.erb")
   }
 
   service { $tomcat_instance_name:
@@ -178,8 +155,6 @@ define tomcat::redhat::instance(
     file { "${real_tomcat_instance_dir}/conf/config.sh":
       ensure  => file,
       content => template("${module_name}/conf/config.sh.erb"),
-      owner   => $tomcat_instance_name,
-      group   => $tomcat_instance_name,
       mode    => '0754',
       notify  => Service[$tomcat_instance_name],
       require => File["$real_tomcat_instance_dir/conf"]
