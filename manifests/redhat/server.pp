@@ -7,6 +7,8 @@ define tomcat::redhat::server($tomcat_version) {
   debug("tomcat_major_version=${tomcat_major_version}")
   debug("tomcat_version=${tomcat_version}")
 
+  Yum::Repo['cegeka-public'] -> Package['httplog'] -> Package["cegeka-tomcat${tomcat_major_version}"]
+
   yum::repo { 'cegeka-public':
     ensure          => present,
     scheme          => 'https',
@@ -17,8 +19,14 @@ define tomcat::redhat::server($tomcat_version) {
     sslverify       => 'True',
     sslcacert       => '/etc/pki/tls/certs/ca-bundle.crt',
     metadata_expire => '5m',
-  } -> package { "cegeka-tomcat${tomcat_major_version}":
+  }
+
+  package { "cegeka-tomcat${tomcat_major_version}":
     ensure => $tomcat_version,
+  }
+
+  package { 'httplog':
+    ensure => present,
   }
 
 }
