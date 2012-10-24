@@ -1,13 +1,11 @@
 require 'spec_helper'
 
-describe 'tomcat::conf::jaas' do
+describe 'tomcat::instance::jaas' do
 
   context 'security setup' do
     let (:title) { 'security setup' }
     let (:facts) { { :operatingsystem => 'redhat' } }
     let(:params) { { :loginconf => "JAAS { foo bar }" } }
-
-    it { should contain_class('tomcat') }
 
     it {
       should contain_file('/opt/tomcat/conf/login.conf').with(
