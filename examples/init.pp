@@ -7,6 +7,12 @@ tomcat::server { "tomcat-${tomcat_version}":
   tomcat_version => $tomcat_version,
 }
 
+tomcat::server::setenv { 'setting env for tomcat server':
+  java_options => [
+    '-Dtest=bla'
+  ]
+}
+
 # Create a tomcat instance $name
 tomcat::instance { 'tomcat00':
   tomcat_instance_root_dir    => $tomcat_instance_root_dir,
@@ -49,4 +55,16 @@ tomcat::instance::jaas { 'setting tomcat jaas config':
         org.test.jaas.loginmodule.DatabaseLoginModule SUFFICIENT debug=true;
         org.test.jaas.loginmodule.FallbackDatabaseLoginModule REQUIRED debug=true;
     };\n"
+}
+
+tomcat::instance::setenv { 'setting env for tomcat00':
+  tomcat_instance_root_dir => $tomcat_instance_root_dir,
+  tomcat_instance_number   => '00',
+  java_options             => [
+    '-Xms512m',
+    '-Xmx1024m',
+    '-XX:PermSize=256m',
+    '-XX:MaxPermSize=512m',
+    '-Denv.ENVIRONMENT=test'
+  ]
 }
