@@ -15,16 +15,16 @@ tomcat::instance { 'tomcat00':
   tomcat_instance_uid         => '1101',
   tomcat_instance_password    => '$1$JOOZyS5c$JDJq9SdMWVZi8IRT/Lh2H1',
   tomcat_version              => $tomcat_version,
-  tomcat_options              => {
-      'SERVER_PORT'           => '8050',
-      'HTTP_PORT'             => '8080',
-      'AJP_PORT'              => '8010',
-      'TOMCAT_INSTANCE_PROPS' => '"-Xmx256m -XX:MaxPermSize=128m
+  tomcat_options              => [
+    { 'SERVER_PORT'           => '8050' },
+    {  'HTTP_PORT'            => '8080' },
+    {  'AJP_PORT'             => '8010' },
+    {  'TOMCAT_INSTANCE_PROPS' => '"-Xmx256m -XX:MaxPermSize=128m
         -Dtn.tomcat.server.port=$SERVER_PORT -Dtn.tomcat.connector.http.port=$HTTP_PORT
         -Dtn.tomcat.connector.ajp.port=$AJP_PORT
         -Dtn.tomcat.connector.ajp.maxThreads=200
-        -Dtn.tomcat.engine.jvmRoute=${TOMCAT_NAME}${TOMCAT_NUMBER}"'
-  }
+        -Dtn.tomcat.engine.jvmRoute=${TOMCAT_NAME}${TOMCAT_NUMBER}"' }
+  ]
 }
 
 # Configure settings for the tomcat instance
