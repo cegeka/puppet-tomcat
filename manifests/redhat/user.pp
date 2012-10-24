@@ -26,7 +26,7 @@ define tomcat::redhat::user($tomcat_instance_root_dir, $tomcat_instance_number, 
         augeas { "tomcat-users/user/$username/add" :
           lens    => 'Xml.lns',
           incl    => "${real_tomcat_instance_dir}/conf/tomcat-users.xml",
-          context => "/files/${real_tomcat_instance_dir}/conf/tomcat-users.xml",
+          context => "/files${real_tomcat_instance_dir}/conf/tomcat-users.xml",
           changes => [
             "set tomcat-users/user[last()+1]/#attribute/username $username",
             "set tomcat-users/user[last()]/#attribute/password $password",
@@ -42,7 +42,7 @@ define tomcat::redhat::user($tomcat_instance_root_dir, $tomcat_instance_number, 
   @augeas { "tomcat-users/user/$username/rm" :
     lens    => 'Xml.lns',
     incl    => "${real_tomcat_instance_dir}/conf/tomcat-users.xml",
-    context => "/files/${real_tomcat_instance_dir}/conf/tomcat-users.xml",
+    context => "/files${real_tomcat_instance_dir}/conf/tomcat-users.xml",
     changes => [
       "rm tomcat-users/user[.][#attribute/username = $username]",
     ],
