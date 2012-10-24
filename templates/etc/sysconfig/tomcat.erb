@@ -1,0 +1,5 @@
+export LANG=en_US.UTF-8
+export JAVA_HOME=/usr/java/latest
+export CATALINA_HOME="<%= tomcat_installation_dir %>"
+export CATALINA_BASE="<%= tomcat_instance_root_dir %>/$TOMCAT_NAME"
+export TOMCAT_JVM_PROPS="-server -Djava.awt.headless=true -Djava.io.tmpdir=$CATALINA_BASE/temp"
