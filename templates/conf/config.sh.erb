@@ -2,7 +2,9 @@
 <% if has_variable?("tomcat_options") %>
 # Tomcat tuning parameters
 <% options = "" %>
-<% scope.lookupvar('tomcat_options').each do |key,value| %>
+<% scope.lookupvar('tomcat_options').each do |hash| %>
+  <% hash.each do |key,value| %>
 export <%=key %>=<%=value%>
+  <% end %>
 <% end %>
 <% end %>
