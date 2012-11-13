@@ -101,7 +101,7 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/server.xml":
     ensure  => file,
-    source  => "puppet:///modules/${module_name}/instance/conf/server.xml",
+    source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/conf/server.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
   }
