@@ -128,6 +128,15 @@ define tomcat::redhat::instance(
     require => Users::Localuser[$tomcat_instance_name]
   }
 
+  if $tomcat_major_version == '7' {
+    file { "$real_tomcat_instance_dir/bin/tomcat-juli.jar":
+      ensure  => file,
+      source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/bin/tomcat-juli.jar",
+      mode    => '0644',
+      require => Users::Localuser[$tomcat_instance_name]
+    }
+  }
+
   file { "/etc/init.d/${tomcat_instance_name}":
     ensure => file,
     owner  => 'root',
