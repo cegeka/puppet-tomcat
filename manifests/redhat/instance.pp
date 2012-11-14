@@ -101,7 +101,7 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/server.xml":
     ensure  => file,
-    source  => "puppet:///modules/${module_name}/instance/conf/server.xml",
+    source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/conf/server.xml",
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
   }
@@ -126,6 +126,15 @@ define tomcat::redhat::instance(
     source  => "puppet:///modules/${module_name}/instance/bin/catalina.sh",
     mode    => '0644',
     require => Users::Localuser[$tomcat_instance_name]
+  }
+
+  if $tomcat_major_version == '7' {
+    file { "$real_tomcat_instance_dir/bin/tomcat-juli.jar":
+      ensure  => file,
+      source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/bin/tomcat-juli.jar",
+      mode    => '0644',
+      require => Users::Localuser[$tomcat_instance_name]
+    }
   }
 
   file { "/etc/init.d/${tomcat_instance_name}":
