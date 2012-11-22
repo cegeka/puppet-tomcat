@@ -1,4 +1,4 @@
-define tomcat::instance::jmx_monitoring($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_jmx_username, $tomcat_jmx_password) {
+define tomcat::instance::jmx_monitoring($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_jmx_username, $tomcat_jmx_password, $tomcat_jmx_access) {
 
   case $::operatingsystem {
     redhat, centos: {
@@ -6,7 +6,8 @@ define tomcat::instance::jmx_monitoring($tomcat_instance_root_dir, $tomcat_insta
         tomcat_instance_root_dir => $tomcat_instance_root_dir,
         tomcat_instance_number   => $tomcat_instance_number,
         tomcat_jmx_username      => $tomcat_jmx_username,
-        tomcat_jmx_password      => $tomcat_jmx_password
+        tomcat_jmx_password      => $tomcat_jmx_password,
+        tomcat_jmx_access        => $tomcat_jmx_access
       }
     }
     default: { fail("operatingsystem ${::operatingsystem} is not supported") }
