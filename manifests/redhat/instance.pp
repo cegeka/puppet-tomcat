@@ -6,9 +6,9 @@ define tomcat::redhat::instance(
     $tomcat_instance_password,
     $tomcat_version,
     $tomcat_options=undef,
-    $tomcat_jmx_enabled=false,
-    $tomcat_jmx_port,
-    $tomcat_jmx_serverport
+    $tomcat_jmx_enabled='false',
+    $tomcat_jmx_port=undef,
+    $tomcat_jmx_serverport=undef
   ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
@@ -104,7 +104,7 @@ define tomcat::redhat::instance(
 
   file { "$real_tomcat_instance_dir/conf/server.xml":
     ensure  => file,
-    source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/conf/server.xml",
+    content => template("${module_name}/tomcat${tomcat_major_version}/conf/server.xml.erb"),
     mode    => '0644',
     require => File["$real_tomcat_instance_dir/conf"]
   }
