@@ -1,4 +1,4 @@
-define tomcat::redhat::jmx_monitoring($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_jmx_username, $tomcat_jmx_password, $tomcat_jmx_access) {
+define tomcat::redhat::jmx_authentication($tomcat_instance_root_dir, $tomcat_instance_number, $tomcat_jmx_username, $tomcat_jmx_password, $tomcat_jmx_access) {
 
   file { "${tomcat_instance_root_dir}/tomcat${tomcat_instance_number}/conf/jmxremote.password":
     ensure  => file,

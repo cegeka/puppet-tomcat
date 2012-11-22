@@ -69,7 +69,7 @@ tomcat::instance::setenv { 'setting env for tomcat00':
   ]
 }
 
-tomcat::instance::jmx_monitoring { 'setting jmx security':
+tomcat::instance::jmx_authentication { 'setting jmx security':
   tomcat_instance_root_dir => $tomcat_instance_root_dir,
   tomcat_instance_number   => '00',
   tomcat_jmx_username      => 'foo',
