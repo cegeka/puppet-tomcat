@@ -6,6 +6,9 @@ define tomcat::redhat::instance(
     $tomcat_instance_password,
     $tomcat_version,
     $tomcat_options=undef,
+    $tomcat_jmx_enabled=false,
+    $tomcat_jmx_port,
+    $tomcat_jmx_serverport
   ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
