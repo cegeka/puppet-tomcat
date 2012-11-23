@@ -68,3 +68,12 @@ tomcat::instance::setenv { 'setting env for tomcat00':
     '-Denv.ENVIRONMENT=test'
   ]
 }
+
+tomcat::instance::jmx_authentication { 'setting jmx security':
+  tomcat_instance_root_dir => $tomcat_instance_root_dir,
+  tomcat_instance_number   => '00',
+  tomcat_jmx_username      => 'foo',
+  tomcat_jmx_password      => 'bar',
+  tomcat_jmx_access        => 'readonly'
+}
+
