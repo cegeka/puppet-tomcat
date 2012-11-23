@@ -4,6 +4,9 @@
   <Listener className="org.apache.catalina.core.JasperListener" />
   <Listener className="org.apache.catalina.mbeans.ServerLifecycleListener" />
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
+  <% if tomcat_jmx_enabled == true %>
+  <Listener className="org.apache.catalina.mbeans.JmxRemoteLifecycleListener" rmiRegistryPortPlatform="<%= tomcat_jmx_port %>" rmiServerPortPlatform="<%= tomcat_jmx_serverport  %>" />
+  <% end %>
 
   <GlobalNamingResources>
     <Resource name="UserDatabase" auth="Container"
@@ -15,8 +18,8 @@
 
   <Service name="Catalina">
 
-    <Connector port="${tn.tomcat.connector.http.port}" protocol="HTTP/1.1" 
-               connectionTimeout="20000" 
+    <Connector port="${tn.tomcat.connector.http.port}" protocol="HTTP/1.1"
+               connectionTimeout="20000"
                redirectPort="8443" useBodyEncodingForURI="true" maxThreads="100" URIEncoding="UTF-8" />
     <Connector port="${tn.tomcat.connector.ajp.port}" protocol="AJP/1.3" redirectPort="8443" maxThreads="${tn.tomcat.connector.ajp.maxThreads}" />
 
