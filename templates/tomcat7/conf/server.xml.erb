@@ -19,7 +19,7 @@
 
   <Service name="Catalina">
 
-    <Connector port="${tn.tomcat.connector.http.port}" protocol="HTTP/1.1"
+    <Connector address="<%= tomcat_listen_address %>" port="${tn.tomcat.connector.http.port}" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="8443"
                useBodyEncodingForURI="true" maxThreads="100" URIEncoding="UTF-8" />
