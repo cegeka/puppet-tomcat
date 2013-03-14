@@ -6,6 +6,7 @@ define tomcat::instance(
     $tomcat_instance_password,
     $tomcat_version,
     $tomcat_options,
+    $tomcat_listen_address="0.0.0.0",
     $tomcat_jmx_enabled=false,
     $tomcat_jmx_port=undef,
     $tomcat_jmx_serverport=undef
@@ -25,6 +26,7 @@ define tomcat::instance(
         tomcat_instance_password => $tomcat_instance_password,
         tomcat_version           => $tomcat_version,
         tomcat_options           => $tomcat_options,
+        tomcat_listen_address    => $tomcat_listen_address,
         tomcat_jmx_enabled       => $tomcat_jmx_enabled,
         tomcat_jmx_port          => $tomcat_jmx_port,
         tomcat_jmx_serverport    => $tomcat_jmx_serverport

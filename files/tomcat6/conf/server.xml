@@ -15,8 +15,8 @@
 
   <Service name="Catalina">
 
-    <Connector port="${tn.tomcat.connector.http.port}" protocol="HTTP/1.1" 
-               connectionTimeout="20000" 
+    <Connector address="${tn.tomcat.connector.http.address}" port="${tn.tomcat.connector.http.port}" protocol="HTTP/1.1"
+               connectionTimeout="20000"
                redirectPort="8443" useBodyEncodingForURI="true" maxThreads="100" URIEncoding="UTF-8" />
     <Connector port="${tn.tomcat.connector.ajp.port}" protocol="AJP/1.3" redirectPort="8443" maxThreads="${tn.tomcat.connector.ajp.maxThreads}" />
 

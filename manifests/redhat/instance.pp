@@ -6,6 +6,7 @@ define tomcat::redhat::instance(
     $tomcat_instance_password,
     $tomcat_version,
     $tomcat_options=undef,
+    $tomcat_listen_address="0.0.0.0",
     $tomcat_jmx_enabled=false,
     $tomcat_jmx_port=undef,
     $tomcat_jmx_serverport=undef
