@@ -1,14 +1,8 @@
 # file managed by puppet
-
 <% if has_variable?("java_options") %>
-#
-# JVM tuning parameters
-#
+# Parameters that should be set in setenv.sh
 <% options = "" %>
-<% scope.lookupvar('java_options').each do |option| %>
-<% options << option + " " %>
+<% scope.lookupvar('java_options').each do |hash| %>
+<% hash.each do |key,value| %>export <%=key %>=<%=value%><% end %>
 <% end %>
-<% options = options.strip %>
-export JAVA_OPTS="<%= options %>"
-
 <% end %>
