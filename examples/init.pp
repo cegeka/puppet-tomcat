@@ -7,18 +7,24 @@ tomcat::server { "tomcat-${tomcat_version}":
   tomcat_version => $tomcat_version,
 }
 
+tomcat::server::setenv { 'setting env for tomcat server':
+  java_options => [
+    '-Dtest=bla'
+  ]
+}
+
 # Create a tomcat instance $name
 tomcat::instance { 'tomcat00':
-  tomcat_instance_root_dir    => $tomcat_instance_root_dir,
-  tomcat_instance_number      => '00',
-  tomcat_instance_gid         => '1001',
-  tomcat_instance_uid         => '1101',
-  tomcat_instance_password    => '$1$JOOZyS5c$JDJq9SdMWVZi8IRT/Lh2H1',
-  tomcat_version              => $tomcat_version,
-  tomcat_options              => [
-    { 'SERVER_PORT'           => '8050' },
-    {  'HTTP_PORT'            => '8080' },
-    {  'AJP_PORT'             => '8010' },
+  tomcat_instance_root_dir     => $tomcat_instance_root_dir,
+  tomcat_instance_number       => '00',
+  tomcat_instance_gid          => '1001',
+  tomcat_instance_uid          => '1101',
+  tomcat_instance_password     => '$1$JOOZyS5c$JDJq9SdMWVZi8IRT/Lh2H1',
+  tomcat_version               => $tomcat_version,
+  tomcat_options               => [
+    { 'SERVER_PORT'            => '8050' },
+    {  'HTTP_PORT'             => '8080' },
+    {  'AJP_PORT'              => '8010' },
     {  'TOMCAT_INSTANCE_PROPS' => '"-Xmx256m -XX:MaxPermSize=128m
         -Dtn.tomcat.server.port=$SERVER_PORT -Dtn.tomcat.connector.http.port=$HTTP_PORT
         -Dtn.tomcat.connector.ajp.port=$AJP_PORT
@@ -50,3 +56,24 @@ tomcat::instance::jaas { 'setting tomcat jaas config':
         org.test.jaas.loginmodule.FallbackDatabaseLoginModule REQUIRED debug=true;
     };\n"
 }
+
+tomcat::instance::setenv { 'setting env for tomcat00':
+  tomcat_instance_root_dir => $tomcat_instance_root_dir,
+  tomcat_instance_number   => '00',
+  java_options             => [
+    '-Xms512m',
+    '-Xmx1024m',
+    '-XX:PermSize=256m',
+    '-XX:MaxPermSize=512m',
+    '-Denv.ENVIRONMENT=test'
+  ]
+}
+
+tomcat::instance::jmx_authentication { 'setting jmx security':
+  tomcat_instance_root_dir => $tomcat_instance_root_dir,
+  tomcat_instance_number   => '00',
+  tomcat_jmx_username      => 'foo',
+  tomcat_jmx_password      => 'bar',
+  tomcat_jmx_access        => 'readonly'
+}
+

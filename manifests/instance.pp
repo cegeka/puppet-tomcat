@@ -6,6 +6,10 @@ define tomcat::instance(
     $tomcat_instance_password,
     $tomcat_version,
     $tomcat_options,
+    $tomcat_listen_address="0.0.0.0",
+    $tomcat_jmx_enabled=false,
+    $tomcat_jmx_port=undef,
+    $tomcat_jmx_serverport=undef
   ) {
 
   if $tomcat_instance_number !~ /^[0-9]+$/ {
@@ -22,6 +26,10 @@ define tomcat::instance(
         tomcat_instance_password => $tomcat_instance_password,
         tomcat_version           => $tomcat_version,
         tomcat_options           => $tomcat_options,
+        tomcat_listen_address    => $tomcat_listen_address,
+        tomcat_jmx_enabled       => $tomcat_jmx_enabled,
+        tomcat_jmx_port          => $tomcat_jmx_port,
+        tomcat_jmx_serverport    => $tomcat_jmx_serverport
       }
     }
     default: { fail("operatingsystem ${::operatingsystem} is not supported") }
