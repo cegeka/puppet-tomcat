@@ -1,7 +1,7 @@
 define tomcat::server::setenv(
   $tomcat_instance_root_dir,
   $tomcat_instance_number,
-  $instance=false
+  $instance=true,
   $java_options=undef,
   $ensure=present,
 ) {
