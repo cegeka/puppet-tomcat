@@ -1,14 +1,17 @@
-define tomcat::redhat::setenv($instance=true, $tomcat_instance_root_dir=undef, $tomcat_instance_number=undef, $java_options=undef) {
+define tomcat::redhat::setenv($ensure=undef,$instance=true, $tomcat_instance_root_dir=undef, $tomcat_instance_number=undef, $java_options=undef) {
+
+  $tomcat_instance_name = "tomcat${tomcat_instance_number}"
+  $real_tomcat_instance_dir = "${tomcat_instance_root_dir}/${tomcat_instance_name}"
 
   case $instance {
     true:
     {
-      file { "${tomcat_instance_root_dir}/tomcat${tomcat_instance_number}/bin/setenv.sh":
-        ensure  => file,
+      file { "${real_tomcat_instance_dir}/bin/setenv.sh":
+        ensure  => $ensure,
         content => template("${module_name}/bin/setenv.sh.erb"),
         owner   => "tomcat${tomcat_instance_number}",
         group   => "tomcat${tomcat_instance_number}",
-        mode    => '0754',
+        mode    => '0664',
       }
     }
     false:
@@ -18,11 +21,11 @@ define tomcat::redhat::setenv($instance=true, $tomcat_instance_root_dir=undef, $
       }
 
       file { "${::tomcat_installation_dir}/bin/setenv.sh":
-        ensure  => file,
+        ensure  => $ensure,
         content => template("${module_name}/bin/setenv.sh.erb"),
         owner   => 'tomcat',
         group   => 'tomcat',
-        mode    => '0754',
+        mode    => '0664',
       }
     }
     default: { fail("Tomcat::Redhat::Setenv[${title}]: parameter instance must be a boolean")  }
