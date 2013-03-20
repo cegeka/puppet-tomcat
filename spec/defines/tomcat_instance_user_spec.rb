@@ -3,28 +3,7 @@ require 'spec_helper'
 describe 'tomcat::instance::user' do
 
   context 'adding tomcat user' do
-    #context 'without the required parameters' do
-    #  let (:title) { 'add tomcat user' }
-    #  let (:facts) { { :operatingsystem => 'redhat' } }
-
-    #  it {
-    #    expect { subject }.to raise_error(
-    #      Puppet::Error, /parameters username, password and roles must be defined/
-    #  )}
-    #end
-
-    #context 'without password parameter' do
-    #  let (:title) { 'add tomcat user' }
-    #  let (:facts) { { :operatingsystem => 'redhat' } }
-    #  let(:params) { { :tomcat_instance_root_dir => '/data', :tomcat_instance_number => '00', :username => 'tomcat', :roles => 'manager-gui,foo' } }
-
-    #  it {
-    #    expect { subject }.to raise_error(
-    #      Puppet::Error, /parameters username, password and roles must be defined/
-    #  )}
-    #end
-
-    context 'with all required parameters specified username, password and roles parameter' do
+    context 'with all the required parameters' do
       let (:title) { 'add tomcat user' }
       let (:facts) {{ :operatingsystem => 'redhat' }}
       let(:params) { { :tomcat_instance_root_dir => '/data', :tomcat_instance_number => '00', :username => 'tomcat', :password => 'tomcat', :roles => 'manager-gui,foo' } }

@@ -31,7 +31,8 @@
   <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />
   <Listener className="org.apache.catalina.mbeans.GlobalResourcesLifecycleListener" />
   <Listener className="org.apache.catalina.core.ThreadLocalLeakPreventionListener" />
-
+  <Listener className="org.apache.catalina.mbeans.JmxRemoteLifecycleListener" rmiRegistryPortPlatform="<%= tomcat_jmx_port %>" rmiServerPortPlatform="<%= tomcat_jmx_serverport  %>" />
+  
   <!-- Global JNDI resources
        Documentation at /docs/jndi-resources-howto.html
   -->

@@ -66,6 +66,8 @@ stop(){
 	ret=$?
   sleep 5
   su $TOMCAT_NAME -c "pkill -u $TOMCAT_NAME java"
+  sleep 5
+  su $TOMCAT_NAME -c "pkill -9 -u $TOMCAT_NAME java"
   rm -f /var/run/${TOMCAT_NAME}.pid
 	return $ret
 }
@@ -91,7 +93,7 @@ status(){
   fi
   return $RETVAL
 }
- 
+
 restart(){
     stop
     start
