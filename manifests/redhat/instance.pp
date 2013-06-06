@@ -172,7 +172,7 @@ define tomcat::redhat::instance(
     replace => false,
     require => File["$real_tomcat_instance_dir/conf"]
   }
- 
+
   if $tomcat_options {
     file { "${real_tomcat_instance_dir}/conf/config.sh":
       ensure  => file,
