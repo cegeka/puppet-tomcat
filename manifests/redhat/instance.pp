@@ -166,6 +166,13 @@ define tomcat::redhat::instance(
     require    => Package["cegeka-tomcat${tomcat_major_version}"],
   }
 
+  file { "${real_tomcat_instance_dir}/conf/customconfig.sh":
+    ensure  => file,
+    mode    => '0754',
+    replace => false,
+    require => File["$real_tomcat_instance_dir/conf"]
+  }
+ 
   if $tomcat_options {
     file { "${real_tomcat_instance_dir}/conf/config.sh":
       ensure  => file,
