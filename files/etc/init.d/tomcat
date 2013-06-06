@@ -48,7 +48,11 @@ if [ -f $CATALINA_BASE/conf/config.sh ]; then
 	. $CATALINA_BASE/conf/config.sh
 fi
 
-export CATALINA_OPTS="$TOMCAT_JVM_PROPS $TOMCAT_ENV_PROPS $TOMCAT_INSTANCE_PROPS"
+if [ -f $CATALINA_BASE/conf/customconfig.sh ]; then
+	. $CATALINA_BASE/conf/customconfig.sh
+fi
+
+export CATALINA_OPTS="$TOMCAT_JVM_PROPS $TOMCAT_ENV_PROPS $TOMCAT_INSTANCE_PROPS $TOMCAT_CUSTOM_PROPS"
 
 start(){
 	echo Starting $TOMCAT_NAME ...
