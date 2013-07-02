@@ -1,5 +1,5 @@
 fixtures:
   repositories:
-    stdlib: git://github.com/cegeka/puppet-stdlib.git
+    stdlib: "ssh://git@github.com/cegeka/puppet-stdlib.git"
   symlinks:
     tomcat: "#{source_dir}"
