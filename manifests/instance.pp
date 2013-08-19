@@ -6,7 +6,7 @@ define tomcat::instance(
     $tomcat_instance_password,
     $tomcat_version,
     $tomcat_options,
-    $tomcat_listen_address="0.0.0.0",
+    $tomcat_listen_address='0.0.0.0',
     $tomcat_connector_http_max_threads='100',
     $tomcat_jmx_enabled=false,
     $tomcat_jmx_port=undef,
