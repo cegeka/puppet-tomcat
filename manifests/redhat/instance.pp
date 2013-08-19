@@ -6,7 +6,8 @@ define tomcat::redhat::instance(
     $tomcat_instance_password,
     $tomcat_version,
     $tomcat_options=undef,
-    $tomcat_listen_address="0.0.0.0",
+    $tomcat_listen_address='0.0.0.0',
+    $tomcat_connector_http_max_threads='100',
     $tomcat_jmx_enabled=false,
     $tomcat_jmx_port=undef,
     $tomcat_jmx_serverport=undef
@@ -108,7 +109,8 @@ define tomcat::redhat::instance(
     ensure  => file,
     content => template("${module_name}/tomcat${tomcat_major_version}/conf/server.xml.erb"),
     mode    => '0644',
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["$real_tomcat_instance_dir/conf"],
+    notify  => Service[$tomcat_instance_name]
   }
 
   file { "$real_tomcat_instance_dir/conf/tomcat-users.xml":
