@@ -10,7 +10,10 @@ define tomcat::redhat::instance(
     $tomcat_connector_http_max_threads='100',
     $tomcat_jmx_enabled=false,
     $tomcat_jmx_port=undef,
-    $tomcat_jmx_serverport=undef
+    $tomcat_jmx_serverport=undef,
+    $tomcat_access_log_valve_enabled=true,
+    $tomcat_access_log_valve_pattern='common',
+    $tomcat_remote_ip_valve_enabled=false
   ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
