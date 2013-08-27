@@ -37,9 +37,14 @@
             unpackWARs="true" autoDeploy="true"
             xmlValidation="false" xmlNamespaceAware="false">
 
+<%- if tomcat_remote_ip_valve_enabled == true -%>
+        <Valve className="org.apache.catalina.valves.RemoteIpValve" />
+<%- end -%>
+<%- if tomcat_access_log_valve_enabled == true -%>
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
                prefix="localhost_access_log." suffix=".txt"
-               pattern="common" resolveHosts="false" />
+               pattern="<%= tomcat_access_log_valve_pattern %>" resolveHosts="false" />
+<%- end -%>
 
       </Host>
     </Engine>
