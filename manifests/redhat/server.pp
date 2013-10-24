@@ -1,6 +1,6 @@
 define tomcat::redhat::server(
   $tomcat_version=undef,
-  $version_lock=false
+  $versionlock=false
 ) {
 
   include yum
@@ -21,14 +21,14 @@ define tomcat::redhat::server(
     ensure => $tomcat_version,
   }
 
-  case $version_lock {
+  case $versionlock {
     true: {
       packagelock { "cegeka-tomcat${tomcat_major_version}": }
     }
     false: {
       packagelock { "cegeka-tomcat${tomcat_major_version}": ensure => absent }
     }
-    default: { fail('Class[Tomcat::Redhat::Server]: parameter version_lock must be true or false')}
+    default: { fail('Class[Tomcat::Redhat::Server]: parameter versionlock must be true or false')}
   }
 
 }
