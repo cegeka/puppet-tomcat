@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite failures="0" time="0.000201" skipped="0" tests="0" errors="0" name="tomcat::instance::user adding tomcat user">
-  <system-out>
-  </system-out>
-  <system-err>
-  </system-err>
-</testsuite>
