@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite failures="0" time="0.101533" skipped="0" tests="1" errors="0" name="tomcat::instance::user removing tomcat user">
-  <testcase time="0.101203" name="tomcat::instance::user removing tomcat user ">
-  </testcase>
-  <system-out>
-  </system-out>
-  <system-err>
-  </system-err>
-</testsuite>
