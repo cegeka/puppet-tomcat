@@ -55,25 +55,22 @@ fi
 export CATALINA_OPTS="$TOMCAT_JVM_PROPS $TOMCAT_ENV_PROPS $TOMCAT_INSTANCE_PROPS $TOMCAT_CUSTOM_PROPS"
 
 start(){
-	echo Starting $TOMCAT_NAME ...
-	su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh start"
-	ret=$?
+  echo Starting $TOMCAT_NAME ...
+  su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh start"
+  ret=$?
   sleep 2
-  pid="$(pgrep -u ${TOMCAT_NAME} java)"
+  pid="$(pgrep -u ${TOMCAT_NAME} -f tomcat.server)"
   echo ${pid} > /var/run/${TOMCAT_NAME}.pid
-	return $ret
+  return $ret
 }
 
 stop(){
-	echo Stopping $TOMCAT_NAME ...
-	su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh stop"
-	ret=$?
-  sleep 5
-  su $TOMCAT_NAME -c "pkill -u $TOMCAT_NAME java"
-  sleep 5
-  su $TOMCAT_NAME -c "pkill -9 -u $TOMCAT_NAME java"
+  echo Stopping $TOMCAT_NAME ...
+  su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh stop"
+  ret=$?
+  sleep 2
   rm -f /var/run/${TOMCAT_NAME}.pid
-	return $ret
+  return $ret
 }
 
 status(){
@@ -99,8 +96,8 @@ status(){
 }
 
 restart(){
-    stop
-    start
+  stop
+  start
 }
 
 # See how we were called.
