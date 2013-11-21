@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite failures="0" time="0.382643" skipped="0" tests="2" errors="0" name="tomcat::instance::user adding tomcat user with all the required parameters">
+  <testcase time="0.28063" name="tomcat::instance::user adding tomcat user with all the required parameters ">
+  </testcase>
+  <testcase time="0.101461" name="tomcat::instance::user adding tomcat user with all the required parameters ">
+  </testcase>
+  <system-out>
+  </system-out>
+  <system-err>
+  </system-err>
+</testsuite>
