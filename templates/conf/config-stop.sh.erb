@@ -1,0 +1,13 @@
+# file managed by puppet
+<% if has_variable?("tomcat_options_stop") %>
+# Tomcat tuning parameters
+<% options = "" %>
+<% scope.lookupvar('tomcat_options_stop').each do |hash| %>
+<% hash.each do |key,value| %>export <%=key %>=<%=value%><% end %>
+<% end %>
+<% else %>
+<% options = "" %>
+<% scope.lookupvar('tomcat_options_start').each do |hash| %>
+<% hash.each do |key,value| %>export <%=key %>=<%=value%><% end %>
+<% end %>
+<% end %>

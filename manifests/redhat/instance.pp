@@ -166,13 +166,18 @@ define tomcat::redhat::instance(
     require    => Package["cegeka-tomcat${tomcat_major_version}"],
   }
 
-  if $tomcat_options {
-    file { "${real_tomcat_instance_dir}/conf/config.sh":
-      ensure  => file,
-      content => template("${module_name}/conf/config.sh.erb"),
-      mode    => '0754',
-      notify  => Service[$tomcat_instance_name],
-      require => File["$real_tomcat_instance_dir/conf"]
-    }
+  file { "${real_tomcat_instance_dir}/conf/config-start.sh":
+    ensure  => file,
+    content => template("${module_name}/conf/config-start.sh.erb"),
+    mode    => '0754',
+    notify  => Service[$tomcat_instance_name],
+    require => File["$real_tomcat_instance_dir/conf"]
+  }
+  file { "${real_tomcat_instance_dir}/conf/config-stop.sh":
+    ensure  => file,
+    content => template("${module_name}/conf/config-stop.sh.erb"),
+    mode    => '0754',
+    notify  => Service[$tomcat_instance_name],
+    require => File["$real_tomcat_instance_dir/conf"]
   }
 }
