@@ -7,7 +7,7 @@ define tomcat::instance(
     $tomcat_version,
     $tomcat_options_start,
     $tomcat_options_stop=undef,
-    $tomcat_listen_address="0.0.0.0",
+    $tomcat_listen_address='0.0.0.0',
     $tomcat_jmx_enabled=false,
     $tomcat_jmx_port=undef,
     $tomcat_jmx_serverport=undef

@@ -13,27 +13,27 @@ define tomcat::redhat::role($tomcat_instance_root_dir, $tomcat_instance_number, 
   case $ensure_real {
     'absent':
       {
-        augeas { "tomcat-users/role/$rolename/rm" :
+        augeas { "tomcat-users/role/${rolename}/rm" :
           lens    => 'Xml.lns',
           incl    => "${real_tomcat_instance_dir}/conf/tomcat-users.xml",
           context => "/files/${real_tomcat_instance_dir}/conf/tomcat-users.xml",
           changes => [
-            "rm tomcat-users/role[.][#attribute/rolename = $rolename]",
+            "rm tomcat-users/role[.][#attribute/rolename = ${rolename}]",
           ],
-          onlyif  => "match tomcat-users/role/#attribute/rolename[. =\"$rolename\"] size > 0",
+          onlyif  => "match tomcat-users/role/#attribute/rolename[. =\"${rolename}\"] size > 0",
           require => File["${real_tomcat_instance_dir}/conf/tomcat-users.xml"]
         }
       }
     'present':
       {
-        augeas { "tomcat-users/role/$rolename/add" :
+        augeas { "tomcat-users/role/${rolename}/add" :
           lens    => 'Xml.lns',
           incl    => "${real_tomcat_instance_dir}/conf/tomcat-users.xml",
           context => "/files/${real_tomcat_instance_dir}/conf/tomcat-users.xml",
           changes => [
-            "set tomcat-users/role[last()+1]/#attribute/rolename $rolename",
+            "set tomcat-users/role[last()+1]/#attribute/rolename ${rolename}",
           ],
-          onlyif  => "match tomcat-users/role/#attribute/rolename[. =\"$rolename\"] size == 0",
+          onlyif  => "match tomcat-users/role/#attribute/rolename[. =\"${rolename}\"] size == 0",
           require => File["${real_tomcat_instance_dir}/conf/tomcat-users.xml"]
         }
       }
