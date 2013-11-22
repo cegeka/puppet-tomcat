@@ -97,7 +97,7 @@ define tomcat::redhat::instance(
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/context.xml",
     mode    => '0644',
-    require => File["${real_tomcat_instance_dir}/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"],
     replace => false,
   }
 
@@ -112,7 +112,7 @@ define tomcat::redhat::instance(
     ensure  => file,
     content => template("${module_name}/tomcat${tomcat_major_version}/conf/server.xml.erb"),
     mode    => '0644',
-    require => File["${real_tomcat_instance_dir}/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"],
     notify  => Service[$tomcat_instance_name]
   }
 
@@ -185,12 +185,13 @@ define tomcat::redhat::instance(
     mode    => '0754',
     notify  => Service[$tomcat_instance_name],
     require => File["${real_tomcat_instance_dir}/conf"]
+  }
 
   file { "${real_tomcat_instance_dir}/conf/customconfig.sh":
     ensure  => file,
     mode    => '0754',
     replace => false,
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
 
 }
