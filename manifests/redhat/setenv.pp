@@ -17,7 +17,7 @@ define tomcat::redhat::setenv($ensure=undef,$instance=true, $tomcat_instance_roo
     false:
     {
       if $::tomcat_installation_dir == undef {
-        fail("parameter $::tomcat_installation_dir is undefined")
+        fail("parameter ${::tomcat_installation_dir} is undefined")
       }
 
       file { "${::tomcat_installation_dir}/bin/setenv.sh":

@@ -6,7 +6,7 @@ define tomcat::redhat::instance(
     $tomcat_instance_password,
     $tomcat_version,
     $tomcat_options=undef,
-    $tomcat_listen_address="0.0.0.0",
+    $tomcat_listen_address='0.0.0.0',
     $tomcat_jmx_enabled=false,
     $tomcat_jmx_port=undef,
     $tomcat_jmx_serverport=undef
@@ -32,7 +32,7 @@ define tomcat::redhat::instance(
     uid        => $tomcat_instance_uid,
     logingroup => $tomcat_instance_name,
     home       => $real_tomcat_instance_dir,
-    comment    => "Tomcat Instance user $tomcat_instance_name",
+    comment    => "Tomcat Instance user ${tomcat_instance_name}",
     password   => $tomcat_instance_password,
   }
 
@@ -41,91 +41,91 @@ define tomcat::redhat::instance(
     group => $tomcat_instance_name
   }
 
-  file { [ "$real_tomcat_instance_dir/hosts", "$real_tomcat_instance_dir/hosts/localhost", "$real_tomcat_instance_dir/hosts/localhost/webapps"]:
+  file { [ "${real_tomcat_instance_dir}/hosts", "${real_tomcat_instance_dir}/hosts/localhost", "${real_tomcat_instance_dir}/hosts/localhost/webapps"]:
     ensure => directory,
     mode   => '0750'
   }
 
-  file { [ "$real_tomcat_instance_dir/logs", "$real_tomcat_instance_dir/logs/webapps"]:
+  file { [ "${real_tomcat_instance_dir}/logs", "${real_tomcat_instance_dir}/logs/webapps"]:
     ensure => directory,
     mode   => '0750'
   }
 
-  file { [ "$real_tomcat_instance_dir/temp", "$real_tomcat_instance_dir/work"]:
+  file { [ "${real_tomcat_instance_dir}/temp", "${real_tomcat_instance_dir}/work"]:
     ensure => directory,
     mode   => '0750'
   }
 
-  file { [ "$real_tomcat_instance_dir/conf", "$real_tomcat_instance_dir/conf/Catalina", "$real_tomcat_instance_dir/conf/Catalina/localhost" ]:
+  file { [ "${real_tomcat_instance_dir}/conf", "${real_tomcat_instance_dir}/conf/Catalina", "${real_tomcat_instance_dir}/conf/Catalina/localhost" ]:
     ensure => directory,
     mode   => '0750'
   }
 
-  file { "$real_tomcat_instance_dir/conf/Catalina/localhost/host-manager.xml":
+  file { "${real_tomcat_instance_dir}/conf/Catalina/localhost/host-manager.xml":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/Catalina/localhost/host-manager.xml",
     mode    => '0644',
-    require => File["$real_tomcat_instance_dir/conf/Catalina/localhost"]
+    require => File["${real_tomcat_instance_dir}/conf/Catalina/localhost"]
   }
 
-  file { "$real_tomcat_instance_dir/conf/Catalina/localhost/manager.xml":
+  file { "${real_tomcat_instance_dir}/conf/Catalina/localhost/manager.xml":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/Catalina/localhost/manager.xml",
     mode    => '0644',
-    require => File["$real_tomcat_instance_dir/conf/Catalina/localhost"]
+    require => File["${real_tomcat_instance_dir}/conf/Catalina/localhost"]
   }
 
-  file { "$real_tomcat_instance_dir/conf/catalina.policy":
+  file { "${real_tomcat_instance_dir}/conf/catalina.policy":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/catalina.policy",
     mode    => '0644',
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
 
-  file { "$real_tomcat_instance_dir/conf/catalina.properties":
+  file { "${real_tomcat_instance_dir}/conf/catalina.properties":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/catalina.properties",
     mode    => '0644',
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
 
-  file { "$real_tomcat_instance_dir/conf/context.xml":
+  file { "${real_tomcat_instance_dir}/conf/context.xml":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/context.xml",
     mode    => '0644',
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
 
-  file { "$real_tomcat_instance_dir/conf/logging.properties":
+  file { "${real_tomcat_instance_dir}/conf/logging.properties":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/logging.properties",
     mode    => '0644',
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
 
-  file { "$real_tomcat_instance_dir/conf/server.xml":
+  file { "${real_tomcat_instance_dir}/conf/server.xml":
     ensure  => file,
     content => template("${module_name}/tomcat${tomcat_major_version}/conf/server.xml.erb"),
     mode    => '0644',
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
 
-  file { "$real_tomcat_instance_dir/conf/tomcat-users.xml":
+  file { "${real_tomcat_instance_dir}/conf/tomcat-users.xml":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/tomcat-users.xml",
     mode    => '0644',
     replace => false,
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
 
-  file { "$real_tomcat_instance_dir/conf/web.xml":
+  file { "${real_tomcat_instance_dir}/conf/web.xml":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/web.xml",
     mode    => '0644',
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
 
-  file { "$real_tomcat_instance_dir/bin/catalina.sh":
+  file { "${real_tomcat_instance_dir}/bin/catalina.sh":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/bin/catalina.sh",
     mode    => '0644',
@@ -133,7 +133,7 @@ define tomcat::redhat::instance(
   }
 
   if $tomcat_major_version == '7' {
-    file { "$real_tomcat_instance_dir/bin/tomcat-juli.jar":
+    file { "${real_tomcat_instance_dir}/bin/tomcat-juli.jar":
       ensure  => file,
       source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/bin/tomcat-juli.jar",
       mode    => '0644',
@@ -171,13 +171,13 @@ define tomcat::redhat::instance(
     content => template("${module_name}/conf/config-start.sh.erb"),
     mode    => '0754',
     notify  => Service[$tomcat_instance_name],
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
   file { "${real_tomcat_instance_dir}/conf/config-stop.sh":
     ensure  => file,
     content => template("${module_name}/conf/config-stop.sh.erb"),
     mode    => '0754',
     notify  => Service[$tomcat_instance_name],
-    require => File["$real_tomcat_instance_dir/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"]
   }
 }
