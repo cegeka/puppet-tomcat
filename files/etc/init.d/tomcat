@@ -44,13 +44,11 @@ if [ -f /etc/sysconfig/$TOMCAT_NAME ]; then
 	. /etc/sysconfig/$TOMCAT_NAME
 fi
 
-if [ -f $CATALINA_BASE/conf/config.sh ]; then
-	. $CATALINA_BASE/conf/config.sh
-fi
-
-export CATALINA_OPTS="$TOMCAT_JVM_PROPS $TOMCAT_ENV_PROPS $TOMCAT_INSTANCE_PROPS"
-
 start(){
+  if [ -f $CATALINA_BASE/conf/config-start.sh ]; then
+  	. $CATALINA_BASE/conf/config-start.sh
+  fi
+  export CATALINA_OPTS="$TOMCAT_JVM_PROPS $TOMCAT_ENV_PROPS $TOMCAT_INSTANCE_PROPS"
   echo Starting $TOMCAT_NAME ...
   su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh start"
   ret=$?
@@ -61,6 +59,10 @@ start(){
 }
 
 stop(){
+  if [ -f $CATALINA_BASE/conf/config-stop.sh ]; then
+  	. $CATALINA_BASE/conf/config-stop.sh
+  fi
+  export CATALINA_OPTS="$TOMCAT_JVM_PROPS $TOMCAT_ENV_PROPS $TOMCAT_INSTANCE_PROPS"
   echo Stopping $TOMCAT_NAME ...
   su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh stop"
   ret=$?
