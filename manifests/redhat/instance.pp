@@ -7,9 +7,13 @@ define tomcat::redhat::instance(
     $tomcat_version,
     $tomcat_options=undef,
     $tomcat_listen_address='0.0.0.0',
+    $tomcat_connector_http_max_threads='100',
     $tomcat_jmx_enabled=false,
     $tomcat_jmx_port=undef,
-    $tomcat_jmx_serverport=undef
+    $tomcat_jmx_serverport=undef,
+    $tomcat_access_log_valve_enabled=true,
+    $tomcat_access_log_valve_pattern='common',
+    $tomcat_remote_ip_valve_enabled=false
   ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
@@ -94,6 +98,7 @@ define tomcat::redhat::instance(
     source  => "puppet:///modules/${module_name}/instance/conf/context.xml",
     mode    => '0644',
     require => File["${real_tomcat_instance_dir}/conf"]
+    replace => false,
   }
 
   file { "${real_tomcat_instance_dir}/conf/logging.properties":
@@ -108,6 +113,7 @@ define tomcat::redhat::instance(
     content => template("${module_name}/tomcat${tomcat_major_version}/conf/server.xml.erb"),
     mode    => '0644',
     require => File["${real_tomcat_instance_dir}/conf"]
+    notify  => Service[$tomcat_instance_name]
   }
 
   file { "${real_tomcat_instance_dir}/conf/tomcat-users.xml":
@@ -179,5 +185,12 @@ define tomcat::redhat::instance(
     mode    => '0754',
     notify  => Service[$tomcat_instance_name],
     require => File["${real_tomcat_instance_dir}/conf"]
+
+  file { "${real_tomcat_instance_dir}/conf/customconfig.sh":
+    ensure  => file,
+    mode    => '0754',
+    replace => false,
+    require => File["$real_tomcat_instance_dir/conf"]
   }
+
 }
