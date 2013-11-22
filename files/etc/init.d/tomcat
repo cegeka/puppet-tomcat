@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bashD
 #
 # tomcat	This shell script takes care of starting
 #		and stopping tomcat.
@@ -42,6 +42,10 @@ fi
 
 if [ -f /etc/sysconfig/$TOMCAT_NAME ]; then
 	. /etc/sysconfig/$TOMCAT_NAME
+fi
+
+if [ -f $CATALINA_BASE/conf/customconfig.sh ]; then
+	. $CATALINA_BASE/conf/customconfig.sh
 fi
 
 start(){
