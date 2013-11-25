@@ -1,4 +1,4 @@
-#!/bin/bashD
+#!/bin/bash
 #
 # tomcat	This shell script takes care of starting
 #		and stopping tomcat.
