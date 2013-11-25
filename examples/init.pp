@@ -7,12 +7,6 @@ tomcat::server { "tomcat-${tomcat_version}":
   tomcat_version => $tomcat_version,
 }
 
-tomcat::server::setenv { 'setting env for tomcat server':
-  java_options => [
-    '-Dtest=bla'
-  ]
-}
-
 # Create a tomcat instance $name
 tomcat::instance { 'tomcat00':
   tomcat_instance_root_dir     => $tomcat_instance_root_dir,
@@ -21,7 +15,7 @@ tomcat::instance { 'tomcat00':
   tomcat_instance_uid          => '1101',
   tomcat_instance_password     => '$1$JOOZyS5c$JDJq9SdMWVZi8IRT/Lh2H1',
   tomcat_version               => $tomcat_version,
-  tomcat_options               => [
+  tomcat_options_start         => [
     { 'SERVER_PORT'            => '8050' },
     {  'HTTP_PORT'             => '8080' },
     {  'AJP_PORT'              => '8010' },
