@@ -51,18 +51,6 @@ tomcat::instance::jaas { 'setting tomcat jaas config':
     };\n"
 }
 
-tomcat::instance::setenv { 'setting env for tomcat00':
-  tomcat_instance_root_dir => $tomcat_instance_root_dir,
-  tomcat_instance_number   => '00',
-  java_options             => [
-    '-Xms512m',
-    '-Xmx1024m',
-    '-XX:PermSize=256m',
-    '-XX:MaxPermSize=512m',
-    '-Denv.ENVIRONMENT=test'
-  ]
-}
-
 tomcat::instance::jmx_authentication { 'setting jmx security':
   tomcat_instance_root_dir => $tomcat_instance_root_dir,
   tomcat_instance_number   => '00',
