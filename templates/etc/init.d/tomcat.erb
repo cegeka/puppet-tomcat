@@ -57,8 +57,6 @@ start(){
   su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh start"
   ret=$?
   sleep 2
-  pid="$(pgrep -u ${TOMCAT_NAME} -f tomcat.server)"
-  echo ${pid} > /var/run/${TOMCAT_NAME}.pid
   return $ret
 }
 
@@ -71,14 +69,13 @@ stop(){
   su $TOMCAT_NAME -c "bash $CATALINA_BASE/bin/catalina.sh stop"
   ret=$?
   sleep 2
-  rm -f /var/run/${TOMCAT_NAME}.pid
   return $ret
 }
 
 status(){
   RETVAL="1"
-  if [ -f "/var/run/${TOMCAT_NAME}.pid" ]; then
-    read kpid < /var/run/${TOMCAT_NAME}.pid
+  if [ -f "<%= tomcat_instance_root_dir %>/${TOMCAT_NAME}/${TOMCAT_NAME}.pid" ]; then
+    read kpid < <%= tomcat_instance_root_dir %>/${TOMCAT_NAME}/${TOMCAT_NAME}.pid
     if checkpid $kpid 2>&1; then
       echo "$0 is already running (${kpid})"
       RETVAL="0"
