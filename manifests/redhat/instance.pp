@@ -149,11 +149,11 @@ define tomcat::redhat::instance(
   }
 
   file { "/etc/init.d/${tomcat_instance_name}":
-    ensure => file,
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0755',
-    source => "puppet:///modules/${module_name}/etc/init.d/tomcat"
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0755',
+    content => template("${module_name}/etc/init.d/tomcat.erb"),
   }
 
   file { "/etc/sysconfig/${tomcat_instance_name}":
