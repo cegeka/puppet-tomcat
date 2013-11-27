@@ -408,7 +408,7 @@ elif [ "$1" = "stop" ] ; then
   if [ ! -z "$CATALINA_PID" ]; then
     if [ -s "$CATALINA_PID" ]; then
       if [ -f "$CATALINA_PID" ]; then
-        ps -p `cat "$CATALINA_PID"` >/dev/null 2>&1
+        kill -0 `cat "$CATALINA_PID"` >/dev/null 2>&1
         if [ $? -gt 0 ]; then
           echo "PID file found but no matching process was found. Stop aborted."
           exit 1
@@ -446,6 +446,10 @@ elif [ "$1" = "stop" ] ; then
         fi
         if [ $SLEEP -gt 0 ]; then
           sleep 1
+        fi
+        if [ $SLEEP -eq 2 ]; then
+          echo "Tomcat isn't stopping, sending SIGTERM signal."
+          kill -15 `cat $CATALINA_PID`
         fi
         if [ $SLEEP -eq 0 ]; then
           if [ $FORCE -eq 0 ]; then
