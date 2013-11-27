@@ -380,7 +380,10 @@ elif [ "$1" = "start" ] ; then
   fi
 
   if [ ! -z "$CATALINA_PID" ]; then
-    echo $! > "$CATALINA_PID"
+    sleep 3
+    PID=`pgrep -u ${TOMCAT_NAME} -f tomcat.server`
+    echo "LOGGING PID: ${PID} FOR USER: ${TOMCAT_NAME}"
+    echo ${PID} > "$CATALINA_PID"
   fi
 
 elif [ "$1" = "stop" ] ; then
@@ -405,7 +408,7 @@ elif [ "$1" = "stop" ] ; then
   if [ ! -z "$CATALINA_PID" ]; then
     if [ -s "$CATALINA_PID" ]; then
       if [ -f "$CATALINA_PID" ]; then
-        kill -0 `cat "$CATALINA_PID"` >/dev/null 2>&1
+        ps -p `cat "$CATALINA_PID"` >/dev/null 2>&1
         if [ $? -gt 0 ]; then
           echo "PID file found but no matching process was found. Stop aborted."
           exit 1
