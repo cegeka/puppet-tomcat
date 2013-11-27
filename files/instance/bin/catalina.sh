@@ -390,7 +390,7 @@ elif [ "$1" = "stop" ] ; then
 
   shift
 
-  SLEEP=5
+  SLEEP=10
   if [ ! -z "$1" ]; then
     echo $1 | grep "[^0-9]" >/dev/null 2>&1
     if [ $? -gt 0 ]; then
