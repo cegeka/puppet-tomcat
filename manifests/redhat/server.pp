@@ -10,7 +10,7 @@ define tomcat::redhat::server(
     fail('Class[Tomcat::Redhat::Server]: parameter tomcat_version must be provided')
   }
 
-  $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)-(\d+)$','\1')
+  $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)-(\d+).*','\1')
 
   debug("tomcat_major_version=${tomcat_major_version}")
   debug("tomcat_version=${tomcat_version}")
