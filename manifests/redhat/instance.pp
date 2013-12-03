@@ -18,7 +18,7 @@ define tomcat::redhat::instance(
   ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
-  $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)-(\d+)$','\1')
+  $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)-(\d+).*','\1')
   $tomcat_version_withoutrelease = regsubst($tomcat_version, '^(\d+\.\d+\.\d+)-.*$','\1')
   $real_tomcat_instance_dir = "${tomcat_instance_root_dir}/${tomcat_instance_name}"
   $tomcat_installation_dir = "/opt/tomcat-${tomcat_version_withoutrelease}"
