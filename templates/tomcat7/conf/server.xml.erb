@@ -42,8 +42,8 @@
 <%- end -%>
 <%- if tomcat_access_log_valve_enabled == true -%>
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs"
-               prefix="localhost_access_log." suffix=".txt"
-               pattern="<%= tomcat_access_log_valve_pattern %>" resolveHosts="false" />
+               prefix="access" suffix=".log"
+               pattern="<%= tomcat_access_log_valve_pattern %>" resolveHosts="false" renameOnRotate="true" />
 <%- end -%>
 
       </Host>
