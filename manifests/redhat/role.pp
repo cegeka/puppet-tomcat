@@ -13,7 +13,7 @@ define tomcat::redhat::role($tomcat_instance_root_dir, $tomcat_instance_number, 
   case $ensure_real {
     'absent':
       {
-        augeas { "tomcat-users/role/${rolename}/rm" :
+        augeas { "${tomcat_instance_name}/tomcat-users/role/${rolename}/rm" :
           lens    => 'Xml.lns',
           incl    => "${real_tomcat_instance_dir}/conf/tomcat-users.xml",
           context => "/files/${real_tomcat_instance_dir}/conf/tomcat-users.xml",
@@ -26,7 +26,7 @@ define tomcat::redhat::role($tomcat_instance_root_dir, $tomcat_instance_number, 
       }
     'present':
       {
-        augeas { "tomcat-users/role/${rolename}/add" :
+        augeas { "${tomcat_instance_name}/tomcat-users/role/${rolename}/add" :
           lens    => 'Xml.lns',
           incl    => "${real_tomcat_instance_dir}/conf/tomcat-users.xml",
           context => "/files/${real_tomcat_instance_dir}/conf/tomcat-users.xml",
