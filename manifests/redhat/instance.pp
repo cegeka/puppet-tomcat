@@ -14,7 +14,10 @@ define tomcat::redhat::instance(
     $tomcat_jmx_serverport=undef,
     $tomcat_access_log_valve_enabled=true,
     $tomcat_access_log_valve_pattern='common',
-    $tomcat_remote_ip_valve_enabled=false
+    $tomcat_remote_ip_valve_enabled=false,
+    $tomcat_ssl_connector_enabled=false,
+    $tomcat_ssl_keystore_file=undef,
+    $tomcat_ssl_keystore_password=undef
   ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
