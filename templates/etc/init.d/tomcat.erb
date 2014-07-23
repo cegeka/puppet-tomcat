@@ -74,8 +74,8 @@ stop(){
 
 status(){
   RETVAL="1"
-  if [ -f "<%= tomcat_instance_root_dir %>/${TOMCAT_NAME}/${TOMCAT_NAME}.pid" ]; then
-    read kpid < <%= tomcat_instance_root_dir %>/${TOMCAT_NAME}/${TOMCAT_NAME}.pid
+  if [ -f "<%= @tomcat_instance_root_dir %>/${TOMCAT_NAME}/${TOMCAT_NAME}.pid" ]; then
+    read kpid < <%= @tomcat_instance_root_dir %>/${TOMCAT_NAME}/${TOMCAT_NAME}.pid
     if checkpid $kpid 2>&1; then
       echo "$0 is already running (${kpid})"
       RETVAL="0"
