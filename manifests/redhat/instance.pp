@@ -173,7 +173,23 @@ define tomcat::redhat::instance(
     enable     => true,
     hasstatus  => true,
     hasrestart => true,
-    require    => Package["cegeka-tomcat${tomcat_major_version}"],
+    require    => $tomcat_major_version ? {
+      '6'  => [ Package["cegeka-tomcat${tomcat_major_version}"],
+                    File["/etc/init.d/${tomcat_instance_name}"],
+                    File["/etc/sysconfig/${tomcat_instance_name}"],
+                    File["${real_tomcat_instance_dir}/bin/catalina.sh"],
+                    File["${real_tomcat_instance_dir}/conf/config-start.sh"],
+                    File["${real_tomcat_instance_dir}/conf/config-stop.sh"],
+                    File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ],
+      '7'  => [ Package["cegeka-tomcat${tomcat_major_version}"],
+                    File["/etc/init.d/${tomcat_instance_name}"],
+                    File["/etc/sysconfig/${tomcat_instance_name}"],
+                    File["${real_tomcat_instance_dir}/bin/catalina.sh"],
+                    File["${real_tomcat_instance_dir}/bin/tomcat-juli.jar"],
+                    File["${real_tomcat_instance_dir}/conf/config-start.sh"],
+                    File["${real_tomcat_instance_dir}/conf/config-stop.sh"],
+                    File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ]
+    }
   }
 
   file { "${real_tomcat_instance_dir}/conf/config-start.sh":
