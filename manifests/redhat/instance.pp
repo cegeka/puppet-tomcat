@@ -191,7 +191,7 @@ define tomcat::redhat::instance(
                     File["${real_tomcat_instance_dir}/bin/tomcat-juli.jar"],
                     File["${real_tomcat_instance_dir}/conf/config-start.sh"],
                     File["${real_tomcat_instance_dir}/conf/config-stop.sh"],
-                    File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ]
+                    File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ],
       '8'  => [ Package["cegeka-tomcat${tomcat_major_version}"],
                     File["/etc/init.d/${tomcat_instance_name}"],
                     File["/etc/sysconfig/${tomcat_instance_name}"],
