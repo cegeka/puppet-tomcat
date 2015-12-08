@@ -16,7 +16,7 @@ task :style do
   linter.configuration.log_format =
       '%{path}:%{linenumber}:%{check}:%{KIND}:%{message}'
 
-	lintrc = "#{MODULE_ROOT_DIR}/.puppet-lintrc"
+	lintrc = "#{MODULE_ROOT_DIR}/.puppet-lint.rc"
   if File.file?(lintrc)
     File.read(lintrc).each_line do |line|
       check = line.sub(/--no-([a-zA-Z0-9_]*)-check/, '\1').chomp
@@ -27,7 +27,15 @@ task :style do
   FileList['**/*.pp'].each do |puppet_file|
     puts "Evaluating code style for #{puppet_file}"
     linter.file = puppet_file
+    linter.configuration.error_level = 'error'
     linter.run
+    linter_problems = linter.print_problems
+    if linter_problems.count > 0
+      linter_problems.each do | linter_problem |
+        puts "#{linter_problem[:KIND]}: #{linter_problem[:message]} on line #{linter_problem[:line]}"
+      end
+    else
+    end
     success = false if linter.errors?
   end
 

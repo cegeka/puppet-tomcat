@@ -45,10 +45,10 @@ tomcat::instance::user { 'adding tomcat user':
 tomcat::instance::jaas { 'setting tomcat jaas config':
   tomcat_instance_root_dir => $tomcat_instance_root_dir,
   tomcat_instance_number   => '00',
-  loginconf                => "simbaJAAS {
+  loginconf                => 'simbaJAAS {
         org.test.jaas.loginmodule.DatabaseLoginModule SUFFICIENT debug=true;
         org.test.jaas.loginmodule.FallbackDatabaseLoginModule REQUIRED debug=true;
-    };\n"
+    };\n'
 }
 
 tomcat::instance::jmx_authentication { 'setting jmx security':
