@@ -14,7 +14,8 @@ define tomcat::redhat::instance(
     $tomcat_jmx_serverport=undef,
     $tomcat_access_log_valve_enabled=true,
     $tomcat_access_log_valve_pattern='common',
-    $tomcat_remote_ip_valve_enabled=false
+    $tomcat_remote_ip_valve_enabled=false,
+    $java_home='/usr/java/latest'
   ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
@@ -66,16 +67,16 @@ define tomcat::redhat::instance(
     mode   => '0750'
   }
 
-  file { "${real_tomcat_instance_dir}/conf/Catalina/localhost/host-manager.xml":
+  file { "${real_tomcat_instance_dir}/tomcat${tomcat_major_version}/conf/Catalina/localhost/host-manager.xml":
     ensure  => file,
-    source  => "puppet:///modules/${module_name}/instance/conf/Catalina/localhost/host-manager.xml",
+    source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/conf/Catalina/localhost/host-manager.xml",
     mode    => '0644',
     require => File["${real_tomcat_instance_dir}/conf/Catalina/localhost"]
   }
 
-  file { "${real_tomcat_instance_dir}/conf/Catalina/localhost/manager.xml":
+  file { "${real_tomcat_instance_dir}/tomcat${tomcat_major_version}/conf/Catalina/localhost/manager.xml":
     ensure  => file,
-    source  => "puppet:///modules/${module_name}/instance/conf/Catalina/localhost/manager.xml",
+    source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/conf/Catalina/localhost/manager.xml",
     mode    => '0644',
     require => File["${real_tomcat_instance_dir}/conf/Catalina/localhost"]
   }
@@ -139,12 +140,14 @@ define tomcat::redhat::instance(
     require => Users::Localuser[$tomcat_instance_name]
   }
 
-  if $tomcat_major_version == '7' {
-    file { "${real_tomcat_instance_dir}/bin/tomcat-juli.jar":
-      ensure  => file,
-      source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/bin/tomcat-juli.jar",
-      mode    => '0644',
-      require => Users::Localuser[$tomcat_instance_name]
+  case $tomcat_major_version {
+    '7','8': {
+      file { "${real_tomcat_instance_dir}/bin/tomcat-juli.jar":
+        ensure  => file,
+        source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/bin/tomcat-juli.jar",
+        mode    => '0644',
+        require => Users::Localuser[$tomcat_instance_name]
+      }
     }
   }
 

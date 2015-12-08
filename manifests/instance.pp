@@ -14,7 +14,8 @@ define tomcat::instance(
     $tomcat_jmx_serverport=undef,
     $tomcat_access_log_valve_enabled=true,
     $tomcat_access_log_valve_pattern='common',
-    $tomcat_remote_ip_valve_enabled=false
+    $tomcat_remote_ip_valve_enabled=false,
+    $java_home='/usr/java/latest'
   ) {
 
   if $tomcat_instance_number !~ /^[0-9]+$/ {
@@ -39,7 +40,8 @@ define tomcat::instance(
         tomcat_jmx_serverport             => $tomcat_jmx_serverport,
         tomcat_access_log_valve_enabled   => $tomcat_access_log_valve_enabled,
         tomcat_access_log_valve_pattern   => $tomcat_access_log_valve_pattern,
-        tomcat_remote_ip_valve_enabled    => $tomcat_remote_ip_valve_enabled
+        tomcat_remote_ip_valve_enabled    => $tomcat_remote_ip_valve_enabled,
+        java_home                         => $java_home
       }
     }
     default: { fail("operatingsystem ${::operatingsystem} is not supported") }
