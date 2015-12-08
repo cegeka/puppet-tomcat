@@ -1,5 +1,5 @@
 export LANG=en_US.UTF-8
-export JAVA_HOME=/usr/java/latest
+export JAVA_HOME="<%= @java_home %>"
 export CATALINA_HOME="<%= @tomcat_installation_dir %>"
 export CATALINA_BASE="<%= @tomcat_instance_root_dir %>/$TOMCAT_NAME"
 export CATALINA_PID="<%= @tomcat_instance_root_dir %>/$TOMCAT_NAME/$TOMCAT_NAME.pid"

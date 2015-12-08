@@ -17,7 +17,8 @@ define tomcat::redhat::instance(
     $tomcat_remote_ip_valve_enabled=false,
     $tomcat_ssl_connector_enabled=false,
     $tomcat_ssl_keystore_file=undef,
-    $tomcat_ssl_keystore_password=undef
+    $tomcat_ssl_keystore_password=undef,
+    $java_home='/usr/java/latest'
   ) {
 
   $tomcat_instance_name = "tomcat${tomcat_instance_number}"
@@ -69,16 +70,16 @@ define tomcat::redhat::instance(
     mode   => '0750'
   }
 
-  file { "${real_tomcat_instance_dir}/conf/Catalina/localhost/host-manager.xml":
+  file { "${real_tomcat_instance_dir}/tomcat${tomcat_major_version}/conf/Catalina/localhost/host-manager.xml":
     ensure  => file,
-    source  => "puppet:///modules/${module_name}/instance/conf/Catalina/localhost/host-manager.xml",
+    source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/conf/Catalina/localhost/host-manager.xml",
     mode    => '0644',
     require => File["${real_tomcat_instance_dir}/conf/Catalina/localhost"]
   }
 
-  file { "${real_tomcat_instance_dir}/conf/Catalina/localhost/manager.xml":
+  file { "${real_tomcat_instance_dir}/tomcat${tomcat_major_version}/conf/Catalina/localhost/manager.xml":
     ensure  => file,
-    source  => "puppet:///modules/${module_name}/instance/conf/Catalina/localhost/manager.xml",
+    source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/conf/Catalina/localhost/manager.xml",
     mode    => '0644',
     require => File["${real_tomcat_instance_dir}/conf/Catalina/localhost"]
   }
@@ -142,12 +143,14 @@ define tomcat::redhat::instance(
     require => Users::Localuser[$tomcat_instance_name]
   }
 
-  if $tomcat_major_version == '7' {
-    file { "${real_tomcat_instance_dir}/bin/tomcat-juli.jar":
-      ensure  => file,
-      source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/bin/tomcat-juli.jar",
-      mode    => '0644',
-      require => Users::Localuser[$tomcat_instance_name]
+  case $tomcat_major_version {
+    '7','8': {
+      file { "${real_tomcat_instance_dir}/bin/tomcat-juli.jar":
+        ensure  => file,
+        source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/bin/tomcat-juli.jar",
+        mode    => '0644',
+        require => Users::Localuser[$tomcat_instance_name]
+      }
     }
   }
 
@@ -182,6 +185,14 @@ define tomcat::redhat::instance(
                     File["${real_tomcat_instance_dir}/conf/config-stop.sh"],
                     File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ],
       '7'  => [ Package["cegeka-tomcat${tomcat_major_version}"],
+                    File["/etc/init.d/${tomcat_instance_name}"],
+                    File["/etc/sysconfig/${tomcat_instance_name}"],
+                    File["${real_tomcat_instance_dir}/bin/catalina.sh"],
+                    File["${real_tomcat_instance_dir}/bin/tomcat-juli.jar"],
+                    File["${real_tomcat_instance_dir}/conf/config-start.sh"],
+                    File["${real_tomcat_instance_dir}/conf/config-stop.sh"],
+                    File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ]
+      '8'  => [ Package["cegeka-tomcat${tomcat_major_version}"],
                     File["/etc/init.d/${tomcat_instance_name}"],
                     File["/etc/sysconfig/${tomcat_instance_name}"],
                     File["${real_tomcat_instance_dir}/bin/catalina.sh"],

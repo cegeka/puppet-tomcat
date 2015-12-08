@@ -17,7 +17,8 @@ define tomcat::instance(
     $tomcat_remote_ip_valve_enabled=false,
     $tomcat_ssl_connector_enabled=false,
     $tomcat_ssl_keystore_file=undef,
-    $tomcat_ssl_keystore_password=undef
+    $tomcat_ssl_keystore_password=undef,
+    $java_home='/usr/java/latest'
   ) {
 
   if $tomcat_instance_number !~ /^[0-9]+$/ {
@@ -43,9 +44,13 @@ define tomcat::instance(
         tomcat_access_log_valve_enabled   => $tomcat_access_log_valve_enabled,
         tomcat_access_log_valve_pattern   => $tomcat_access_log_valve_pattern,
         tomcat_remote_ip_valve_enabled    => $tomcat_remote_ip_valve_enabled,
+<<<<<<< HEAD
+        java_home                         => $java_home
+=======
         tomcat_ssl_connector_enabled      => $tomcat_ssl_connector_enabled,
         tomcat_ssl_keystore_file          => $tomcat_ssl_keystore_file,
         tomcat_ssl_keystore_password      => $tomcat_ssl_keystore_password
+>>>>>>> upstream/master
       }
     }
     default: { fail("operatingsystem ${::operatingsystem} is not supported") }
