@@ -70,14 +70,14 @@ define tomcat::redhat::instance(
     mode   => '0750'
   }
 
-  file { "${real_tomcat_instance_dir}/tomcat${tomcat_major_version}/conf/Catalina/localhost/host-manager.xml":
+  file { "${real_tomcat_instance_dir}/conf/Catalina/localhost/host-manager.xml":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/conf/Catalina/localhost/host-manager.xml",
     mode    => '0644',
     require => File["${real_tomcat_instance_dir}/conf/Catalina/localhost"]
   }
 
-  file { "${real_tomcat_instance_dir}/tomcat${tomcat_major_version}/conf/Catalina/localhost/manager.xml":
+  file { "${real_tomcat_instance_dir}/conf/Catalina/localhost/manager.xml":
     ensure  => file,
     source  => "puppet:///modules/${module_name}/tomcat${tomcat_major_version}/conf/Catalina/localhost/manager.xml",
     mode    => '0644',
