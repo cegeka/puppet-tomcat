@@ -13,7 +13,7 @@ define tomcat::redhat::user($tomcat_instance_root_dir, $tomcat_instance_number, 
   case $ensure_real {
     'absent':
       {
-        Augeas <| title == "tomcat-users/user/${username}/rm" |>
+        Augeas <| title == "${tomcat_instance_name}/tomcat-users/user/${username}/rm" |>
       }
     'present':
       {
@@ -21,9 +21,9 @@ define tomcat::redhat::user($tomcat_instance_root_dir, $tomcat_instance_number, 
           fail("Tomcat::Conf::User[${title}]: parameters username, password and roles must be defined")
         }
 
-        Augeas <| title == "tomcat-users/user/${username}/rm" |>
+        Augeas <| title == "${tomcat_instance_name}/tomcat-users/user/${username}/rm" |>
 
-        augeas { "tomcat-users/user/${username}/add" :
+        augeas { "${tomcat_instance_name}/tomcat-users/user/${username}/add" :
           lens    => 'Xml.lns',
           incl    => "${real_tomcat_instance_dir}/conf/tomcat-users.xml",
           context => "/files${real_tomcat_instance_dir}/conf/tomcat-users.xml",
@@ -33,13 +33,13 @@ define tomcat::redhat::user($tomcat_instance_root_dir, $tomcat_instance_number, 
             "set tomcat-users/user[last()]/#attribute/roles ${roles}",
           ],
           onlyif  => "match tomcat-users/user/#attribute/username[. =\"${username}\"] size == 0",
-          require => Augeas["tomcat-users/user/${username}/rm"]
+          require => Augeas["${tomcat_instance_name}/tomcat-users/user/${username}/rm"]
         }
       }
     default: { notice('The given ensure parameter is not supported') }
   }
 
-  @augeas { "tomcat-users/user/${username}/rm" :
+  @augeas { "${tomcat_instance_name}/tomcat-users/user/${username}/rm" :
     lens    => 'Xml.lns',
     incl    => "${real_tomcat_instance_dir}/conf/tomcat-users.xml",
     context => "/files${real_tomcat_instance_dir}/conf/tomcat-users.xml",

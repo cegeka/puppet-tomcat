@@ -390,7 +390,7 @@ elif [ "$1" = "stop" ] ; then
 
   shift
 
-  SLEEP=10
+  SLEEP=30
   if [ ! -z "$1" ]; then
     echo $1 | grep "[^0-9]" >/dev/null 2>&1
     if [ $? -gt 0 ]; then
@@ -421,7 +421,7 @@ elif [ "$1" = "stop" ] ; then
       echo "PID file is empty and has been ignored."
     fi
   fi
-  
+
   "$_RUNJAVA" $JAVA_OPTS $CATALINA_OPTS \
     -Djava.endorsed.dirs="$JAVA_ENDORSED_DIRS" -classpath "$CLASSPATH" \
     -Dcatalina.base="$CATALINA_BASE" \
