@@ -44,13 +44,10 @@ define tomcat::instance(
         tomcat_access_log_valve_enabled   => $tomcat_access_log_valve_enabled,
         tomcat_access_log_valve_pattern   => $tomcat_access_log_valve_pattern,
         tomcat_remote_ip_valve_enabled    => $tomcat_remote_ip_valve_enabled,
-<<<<<<< HEAD
-        java_home                         => $java_home
-=======
         tomcat_ssl_connector_enabled      => $tomcat_ssl_connector_enabled,
         tomcat_ssl_keystore_file          => $tomcat_ssl_keystore_file,
-        tomcat_ssl_keystore_password      => $tomcat_ssl_keystore_password
->>>>>>> upstream/master
+        tomcat_ssl_keystore_password      => $tomcat_ssl_keystore_password,
+        java_home                         => $java_home
       }
     }
     default: { fail("operatingsystem ${::operatingsystem} is not supported") }
