@@ -1,14 +1,14 @@
 define tomcat::server::setenv(
-  $tomcat_instance_root_dir,
   $tomcat_instance_number,
+  $tomcat_instance_root_dir,
+  $ensure=present,
   $instance=true,
   $java_options=undef,
-  $ensure=present,
 ) {
 
   case $::operatingsystem {
-    redhat, centos: {
-      tomcat::redhat::setenv { $name:
+    'redhat', 'centos': {
+      tomcat::redhat::setenv { $name :
         ensure                    => $ensure,
         tomcat_instance_root_dir  => $tomcat_instance_root_dir,
         tomcat_instance_number    => $tomcat_instance_number,
