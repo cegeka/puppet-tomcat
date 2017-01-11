@@ -27,10 +27,6 @@ define tomcat::redhat::instance(
   $real_tomcat_instance_dir = "${tomcat_instance_root_dir}/${tomcat_instance_name}"
   $tomcat_installation_dir = "/opt/tomcat-${tomcat_version_withoutrelease}"
 
-  debug("tomcat_instance_name= ${tomcat_instance_name}")
-  debug("real_tomcat_instance_dir = ${real_tomcat_instance_dir}")
-  notice("tomcat_version_withoutrelease = ${tomcat_version_withoutrelease}")
-
   include users
 
   users::localgroup { $tomcat_instance_name:
