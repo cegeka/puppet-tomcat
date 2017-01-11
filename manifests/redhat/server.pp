@@ -5,15 +5,12 @@ define tomcat::redhat::server(
 
   include yum
   include stdlib::packages
-  
+
   if !$tomcat_version {
     fail('Class[Tomcat::Redhat::Server]: parameter tomcat_version must be provided')
   }
 
   $tomcat_major_version = regsubst($tomcat_version, '^(\d+)\.(\d+)\.(\d+)-(\d+).*','\1')
-
-  debug("tomcat_major_version=${tomcat_major_version}")
-  debug("tomcat_version=${tomcat_version}")
 
   Package <| title == httplog |> -> Package["cegeka-tomcat${tomcat_major_version}"]
 
