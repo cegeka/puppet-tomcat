@@ -1,7 +1,7 @@
 define tomcat::instance::user($tomcat_instance_root_dir, $tomcat_instance_number, $username=undef, $password=undef, $roles=undef, $ensure = present) {
 
   case $::operatingsystem {
-    'RedHat,' 'CentOS': {
+    'RedHat','CentOS': {
       tomcat::redhat::user { $name:
         ensure                   => $ensure,
         tomcat_instance_root_dir => $tomcat_instance_root_dir,
