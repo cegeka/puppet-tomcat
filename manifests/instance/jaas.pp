@@ -5,7 +5,7 @@ define tomcat::instance::jaas (
 ) {
 
   case $::operatingsystem {
-    'redhat', 'centos': {
+    'RedHat', 'CentOS': {
       tomcat::redhat::jaas { $name :
         tomcat_instance_root_dir => $tomcat_instance_root_dir,
         tomcat_instance_number   => $tomcat_instance_number,

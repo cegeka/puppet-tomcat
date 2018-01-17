@@ -4,7 +4,7 @@ define tomcat::server(
 ) {
 
   case $::operatingsystem {
-      redhat, centos: {
+      'RedHat', 'CentOS': {
         tomcat::redhat::server { $name:
           tomcat_version => $tomcat_version,
           versionlock    => $versionlock
