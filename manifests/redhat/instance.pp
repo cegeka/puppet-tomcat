@@ -18,6 +18,8 @@ define tomcat::redhat::instance(
     $tomcat_ssl_connector_enabled=false,
     $tomcat_ssl_keystore_file=undef,
     $tomcat_ssl_keystore_password=undef,
+    $tomcat_use_umask=false,
+    $tomcat_umask='0002'
     $java_home='/usr/java/latest'
   ) {
 
@@ -149,13 +151,22 @@ define tomcat::redhat::instance(
       }
     }
   }
-
-  file { "/etc/init.d/${tomcat_instance_name}":
-    ensure  => file,
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0755',
-    content => template("${module_name}/etc/init.d/tomcat.erb"),
+  if $tomcat_use_umask {
+    file { "/etc/init.d/${tomcat_instance_name}":
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      content => template("${module_name}/etc/init.d/tomcat_umask.erb"),
+    }
+  } else {
+    file { "/etc/init.d/${tomcat_instance_name}":
+      ensure  => file,
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0755',
+      content => template("${module_name}/etc/init.d/tomcat.erb"),
+    }
   }
 
   file { "/etc/sysconfig/${tomcat_instance_name}":
