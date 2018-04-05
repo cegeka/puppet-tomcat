@@ -151,6 +151,7 @@ define tomcat::redhat::instance(
       }
     }
   }
+
   file { "/etc/init.d/${tomcat_instance_name}":
     ensure  => file,
     owner   => 'root',
