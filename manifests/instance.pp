@@ -18,7 +18,9 @@ define tomcat::instance(
     $tomcat_ssl_connector_enabled=false,
     $tomcat_ssl_keystore_file=undef,
     $tomcat_ssl_keystore_password=undef,
-    $java_home='/usr/java/latest'
+    $java_home='/usr/java/latest',
+    $tomcat_use_umask=false,
+    $tomcat_umask='0002'
   ) {
 
   if $tomcat_instance_number !~ /^[0-9]+$/ {
@@ -47,7 +49,9 @@ define tomcat::instance(
         tomcat_ssl_connector_enabled      => $tomcat_ssl_connector_enabled,
         tomcat_ssl_keystore_file          => $tomcat_ssl_keystore_file,
         tomcat_ssl_keystore_password      => $tomcat_ssl_keystore_password,
-        java_home                         => $java_home
+        java_home                         => $java_home,
+        tomcat_use_umask                  => $tomcat_use_umask,
+        tomcat_umask                      => $tomcat_umask
       }
     }
     default: { fail("operatingsystem ${::operatingsystem} is not supported") }

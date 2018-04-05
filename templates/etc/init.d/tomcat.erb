@@ -13,6 +13,9 @@
 # Source function library.
 . /etc/rc.d/init.d/functions
 
+<%- if @tomcat_use_umask -%>
+umask <%= @tomcat_umask %>
+<%- end -%>
 # Source tomcat configuration.
 
 function error {
