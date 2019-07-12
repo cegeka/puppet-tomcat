@@ -4,7 +4,10 @@ define tomcat::redhat::server(
 ) {
 
   include yum
-  include stdlib::packages
+
+  @package { 'httplog':
+    ensure => present,
+  }
 
   if !$tomcat_version {
     fail('Class[Tomcat::Redhat::Server]: parameter tomcat_version must be provided')
