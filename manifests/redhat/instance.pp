@@ -6,6 +6,7 @@ define tomcat::redhat::instance(
     $tomcat_instance_password,
     $tomcat_version,
     $tomcat_options_start,
+    $tomcat_instance_groups=undef,
     $tomcat_options_stop=undef,
     $tomcat_listen_address='0.0.0.0',
     $tomcat_connector_http_max_threads='100',
@@ -38,6 +39,7 @@ define tomcat::redhat::instance(
   users::localuser { $tomcat_instance_name:
     uid        => $tomcat_instance_uid,
     logingroup => $tomcat_instance_name,
+    groups     => $tomcat_instance_groups,
     home       => $real_tomcat_instance_dir,
     comment    => "Tomcat Instance user ${tomcat_instance_name}",
     password   => $tomcat_instance_password,
