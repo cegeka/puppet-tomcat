@@ -22,7 +22,7 @@
     <Connector address="<%= @tomcat_listen_address %>" port="${tn.tomcat.connector.http.port}" protocol="HTTP/1.1"
                connectionTimeout="20000"
                redirectPort="8443"
-               useBodyEncodingForURI="true" maxThreads="<%= @tomcat_connector_http_max_threads %>" URIEncoding="UTF-8" />
+               useBodyEncodingForURI="true" maxThreads="<%= @tomcat_connector_http_max_threads %>" URIEncoding="UTF-8" <%- if @tomcat_gzip_compression_enabled -%>compression="on" compressionMinSize="<%= @tomcat_gzip_compression_min_size -%>"<%- end -%>/>
 
 <%- if @tomcat_ssl_connector_enabled == true -%>
     <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol" SSLEnabled="true" maxThreads="150"
