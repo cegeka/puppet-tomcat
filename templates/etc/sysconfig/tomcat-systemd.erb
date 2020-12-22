@@ -1,0 +1,7 @@
+export LANG=en_US.UTF-8
+export JAVA_HOME="<%= @java_home %>"
+export TOMCAT_NAME="<%= @tomcat_instance_name %>"
+export JAVA_OPTS="-server -Djava.awt.headless=true -Djava.io.tmpdir=$CATALINA_BASE/temp"
+export CATALINA_HOME="<%= @tomcat_installation_dir %>"
+export CATALINA_BASE="<%= @tomcat_instance_root_dir %>/<%= @tomcat_instance_name %>"
+export CATALINA_PID="<%= @tomcat_instance_root_dir %>/<%= @tomcat_instance_name %>/<%= @tomcat_instance_name %>.pid"

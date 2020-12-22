@@ -1,0 +1,14 @@
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=syslog.target network.target
+
+[Service]
+Type=forking
+PIDFile=<%= @tomcat_instance_root_dir %>/<%= @tomcat_instance_name %>/<%= @tomcat_instance_name %>.pid
+ExecStart=<%= @tomcat_instance_root_dir %>/<%= @tomcat_instance_name %>/bin/catalina.sh start
+User=<%= @tomcat_instance_name %>
+Group=<%= @tomcat_instance_name %>
+UMask=<%= @tomcat_umask %>
+
+[Install]
+WantedBy=multi-user.target

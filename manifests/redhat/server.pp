@@ -23,10 +23,22 @@ define tomcat::redhat::server(
 
   case $versionlock {
     true: {
-      yum::versionlock { "0:cegeka-tomcat${tomcat_major_version}-${tomcat_version}.*": }
+      yum::versionlock { "cegeka-tomcat${tomcat_major_version}":
+        ensure  => present,
+        version => regsubst($tomcat_version, '^(.*?)-(.*)','\1'),
+        release => regsubst($tomcat_version, '^(.*?)-(.*)','\2'),
+        epoch   => 0,
+        arch    => 'noarch',
+      }
     }
     false: {
-      yum::versionlock { "0:cegeka-tomcat${tomcat_major_version}-${tomcat_version}.*": ensure => absent }
+      yum::versionlock { "cegeka-tomcat${tomcat_major_version}":
+        ensure  => absent,
+        version => regsubst($tomcat_version, '^(.*?)-(.*)','\1'),
+        release => regsubst($tomcat_version, '^(.*?)-(.*)','\2'),
+        epoch   => 0,
+        arch    => 'noarch',
+      }
     }
     default: { fail('Class[Tomcat::Redhat::Server]: parameter versionlock must be true or false')}
   }
