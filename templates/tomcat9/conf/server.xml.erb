@@ -23,8 +23,6 @@
                redirectPort="8443"
                useBodyEncodingForURI="true" maxThreads="<%= @tomcat_connector_http_max_threads %>" URIEncoding="UTF-8" />
 
-    <Connector port="${tn.tomcat.connector.ajp.port}" protocol="AJP/1.3" redirectPort="8443" maxThreads="${tn.tomcat.connector.ajp.maxThreads}" secret="tomcat" />
-
     <Engine name="Catalina" defaultHost="localhost" jvmRoute="${tn.tomcat.engine.jvmRoute}">
 
       <Realm className="org.apache.catalina.realm.LockOutRealm">
