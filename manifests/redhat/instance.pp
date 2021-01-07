@@ -36,11 +36,13 @@ define tomcat::redhat::instance(
     '6','7': {
       $service_file = "/etc/init.d/${tomcat_instance_name}"
       $service_file_template = "${module_name}/etc/init.d/tomcat.erb"
+      $service_file_mode = '0755'
       $sysconfig_template = "${module_name}/etc/sysconfig/tomcat-init.erb"
     }
     '8': {
       $service_file = "/usr/lib/systemd/system/${tomcat_instance_name}.service"
       $service_file_template = "${module_name}/usr/lib/systemd/system/systemd.erb"
+      $service_file_mode = '0644'
       $sysconfig_template = "${module_name}/etc/sysconfig/tomcat-systemd.erb"
     }
     default: {}
@@ -177,7 +179,7 @@ define tomcat::redhat::instance(
     ensure  => file,
     owner   => 'root',
     group   => 'root',
-    mode    => '0755',
+    mode    => $service_file_mode,
     content => template($service_file_template),
   }
 
