@@ -14,6 +14,7 @@ define tomcat::redhat::instance(
     $tomcat_jmx_port=undef,
     $tomcat_jmx_serverport=undef,
     $tomcat_access_log_valve_enabled=true,
+    $tomcat_error_report_valve_enabled=false,
     $tomcat_access_log_valve_pattern='common',
     $tomcat_remote_ip_valve_enabled=false,
     $tomcat_ssl_connector_enabled=false,

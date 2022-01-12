@@ -44,6 +44,9 @@
                prefix="localhost_access_log." suffix=".txt"
                pattern="<%= @tomcat_access_log_valve_pattern %>" resolveHosts="false" />
 <%- end -%>
+<%- if @tomcat_error_report_valve_enabled == true -%>
+        <Valve className="org.apache.catalina.valves.ErrorReportValve" showReport="false" showServerInfo="false" />
+<%- end -%>
 
       </Host>
     </Engine>
