@@ -4,6 +4,7 @@ define tomcat::redhat::instance(
     $tomcat_instance_uid,
     $tomcat_instance_gid,
     $tomcat_instance_password,
+    $tomcat_ajp_secretrequired=true,
     $tomcat_version,
     $tomcat_options_start,
     $tomcat_instance_groups=undef,
