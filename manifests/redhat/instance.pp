@@ -123,7 +123,7 @@ define tomcat::redhat::instance(
     source  => "puppet:///modules/${module_name}/instance/conf/context.xml",
     mode    => '0644',
     require => File["${real_tomcat_instance_dir}/conf"],
-    replace => false,
+    replace => false
   }
 
   file { "${real_tomcat_instance_dir}/conf/logging.properties":
@@ -153,7 +153,8 @@ define tomcat::redhat::instance(
     ensure  => file,
     source  => "puppet:///modules/${module_name}/instance/conf/web.xml",
     mode    => '0644',
-    require => File["${real_tomcat_instance_dir}/conf"]
+    require => File["${real_tomcat_instance_dir}/conf"],
+    replace => false
   }
 
   file { "${real_tomcat_instance_dir}/bin/catalina.sh":
