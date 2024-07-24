@@ -34,14 +34,14 @@ define tomcat::redhat::instance(
   $real_tomcat_instance_dir = "${tomcat_instance_root_dir}/${tomcat_instance_name}"
   $tomcat_installation_dir = "/opt/tomcat-${tomcat_version_withoutrelease}"
 
-  case $::os[release][major] {
+  case $facts['os']['release']['major'] {
     '6','7': {
       $service_file = "/etc/init.d/${tomcat_instance_name}"
       $service_file_template = "${module_name}/etc/init.d/tomcat.erb"
       $service_file_mode = '0755'
       $sysconfig_template = "${module_name}/etc/sysconfig/tomcat-init.erb"
     }
-    '8': {
+    '8','9': {
       $service_file = "/usr/lib/systemd/system/${tomcat_instance_name}.service"
       $service_file_template = "${module_name}/usr/lib/systemd/system/systemd.erb"
       $service_file_mode = '0644'
