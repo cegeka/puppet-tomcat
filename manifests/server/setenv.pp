@@ -6,7 +6,7 @@ define tomcat::server::setenv(
   $java_options=undef,
 ) {
 
-  case $::operatingsystem {
+  case $facts['os']['name'] {
     'RedHat', 'CentOS': {
       tomcat::redhat::setenv { $name :
         ensure                    => $ensure,
@@ -16,7 +16,7 @@ define tomcat::server::setenv(
         instance                  => $instance,
       }
     }
-    default: { fail("operatingsystem ${::operatingsystem} is not supported") }
+    default: { fail("operatingsystem ${facts['os']['name']} is not supported") }
   }
 
 }

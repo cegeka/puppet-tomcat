@@ -4,7 +4,7 @@ define tomcat::instance::jaas (
   $loginconf=undef
 ) {
 
-  case $::operatingsystem {
+  case $facts['os']['name'] {
     'RedHat', 'CentOS': {
       tomcat::redhat::jaas { $name :
         tomcat_instance_root_dir => $tomcat_instance_root_dir,
@@ -12,7 +12,7 @@ define tomcat::instance::jaas (
         loginconf                => $loginconf
       }
     }
-    default: { fail("operatingsystem ${::operatingsystem} is not supported") }
+    default: { fail("operatingsystem ${facts['os']['name']} is not supported") }
   }
 
 }

@@ -32,7 +32,7 @@ define tomcat::instance(
     fail("Tomcat::Instance[${title}]: parameter tomcat_instance_number must be numeric")
   }
 
-  case $::operatingsystem {
+  case $facts['os']['name'] {
     'RedHat', 'CentOS': {
       tomcat::redhat::instance { $name:
         tomcat_instance_root_dir          => $tomcat_instance_root_dir,
@@ -64,7 +64,7 @@ define tomcat::instance(
         tomcat_umask                      => $tomcat_umask
       }
     }
-    default: { fail("operatingsystem ${::operatingsystem} is not supported") }
+    default: { fail("operatingsystem ${facts['os']['name']} is not supported") }
   }
 
 }

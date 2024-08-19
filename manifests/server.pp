@@ -3,14 +3,14 @@ define tomcat::server(
   $versionlock=false
 ) {
 
-  case $::operatingsystem {
+  case $facts['os']['name'] {
       'RedHat', 'CentOS': {
         tomcat::redhat::server { $name:
           tomcat_version => $tomcat_version,
           versionlock    => $versionlock
         }
       }
-      default: { fail("operatingsystem ${::operatingsystem} is not supported") }
+      default: { fail("operatingsystem ${facts['os']['name']} is not supported") }
   }
 
 }

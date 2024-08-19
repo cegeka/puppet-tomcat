@@ -1,6 +1,6 @@
 define tomcat::instance::setenv($tomcat_instance_root_dir, $tomcat_instance_number, $java_options=undef) {
 
-  case $::operatingsystem {
+  case $facts['os']['name'] {
     'RedHat', 'CentOS': {
       tomcat::redhat::setenv { $name:
         instance                 => true,
@@ -9,7 +9,7 @@ define tomcat::instance::setenv($tomcat_instance_root_dir, $tomcat_instance_numb
         java_options             => $java_options
       }
     }
-    default: { fail("operatingsystem ${::operatingsystem} is not supported") }
+    default: { fail("operatingsystem ${facts['os']['name']} is not supported") }
   }
 
 }
