@@ -185,15 +185,14 @@ define tomcat::redhat::instance(
       owner   => 'root',
       group   => 'root',
       mode    => $service_file_mode,
-      #unmanage this somehow
-      content => template($service_file_template),
+      content => template($service_file_template)
     }
   } else {
     file { $service_file :
       ensure  => file,
       owner   => 'root',
       group   => 'root',
-      mode    => $service_file_mode,
+      mode    => $service_file_mode
     }
   }
 
