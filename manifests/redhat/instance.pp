@@ -189,10 +189,10 @@ define tomcat::redhat::instance(
     }
   } else {
     file { $service_file :
-      ensure  => file,
-      owner   => 'root',
-      group   => 'root',
-      mode    => $service_file_mode
+      ensure => file,
+      owner  => 'root',
+      group  => 'root',
+      mode   => $service_file_mode
     }
   }
 
@@ -211,23 +211,14 @@ define tomcat::redhat::instance(
     hasstatus  => true,
     hasrestart => true,
     require    => $tomcat_major_version ? {
-      '6'  => [ Package["cegeka-tomcat${tomcat_major_version}"],
+      '6' => [ Package["cegeka-tomcat${tomcat_major_version}"],
                     File[$service_file],
                     File["/etc/sysconfig/${tomcat_instance_name}"],
                     File["${real_tomcat_instance_dir}/bin/catalina.sh"],
                     File["${real_tomcat_instance_dir}/conf/config-start.sh"],
                     File["${real_tomcat_instance_dir}/conf/config-stop.sh"],
                     File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ],
-      '7'  => [ Package["cegeka-tomcat${tomcat_major_version}"],
-                    File[$service_file],
-                    File["/etc/sysconfig/${tomcat_instance_name}"],
-                    File["${real_tomcat_instance_dir}/bin/catalina.sh"],
-                    File["${real_tomcat_instance_dir}/bin/setclasspath.sh"],
-                    File["${real_tomcat_instance_dir}/bin/tomcat-juli.jar"],
-                    File["${real_tomcat_instance_dir}/conf/config-start.sh"],
-                    File["${real_tomcat_instance_dir}/conf/config-stop.sh"],
-                    File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ],
-      '8'  => [ Package["cegeka-tomcat${tomcat_major_version}"],
+      '7' => [ Package["cegeka-tomcat${tomcat_major_version}"],
                     File[$service_file],
                     File["/etc/sysconfig/${tomcat_instance_name}"],
                     File["${real_tomcat_instance_dir}/bin/catalina.sh"],
@@ -236,7 +227,16 @@ define tomcat::redhat::instance(
                     File["${real_tomcat_instance_dir}/conf/config-start.sh"],
                     File["${real_tomcat_instance_dir}/conf/config-stop.sh"],
                     File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ],
-      '9'  => [ Package["cegeka-tomcat${tomcat_major_version}"],
+      '8' => [ Package["cegeka-tomcat${tomcat_major_version}"],
+                    File[$service_file],
+                    File["/etc/sysconfig/${tomcat_instance_name}"],
+                    File["${real_tomcat_instance_dir}/bin/catalina.sh"],
+                    File["${real_tomcat_instance_dir}/bin/setclasspath.sh"],
+                    File["${real_tomcat_instance_dir}/bin/tomcat-juli.jar"],
+                    File["${real_tomcat_instance_dir}/conf/config-start.sh"],
+                    File["${real_tomcat_instance_dir}/conf/config-stop.sh"],
+                    File["${real_tomcat_instance_dir}/conf/customconfig.sh"] ],
+      '9' => [ Package["cegeka-tomcat${tomcat_major_version}"],
                     File[$service_file],
                     File["/etc/sysconfig/${tomcat_instance_name}"],
                     File["${real_tomcat_instance_dir}/bin/catalina.sh"],
