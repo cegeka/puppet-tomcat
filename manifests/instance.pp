@@ -25,7 +25,8 @@ define tomcat::instance(
     $tomcat_gzip_compression_enabled=false,
     $tomcat_gzip_compression_min_size='2048',
     $tomcat_use_umask=false,
-    $tomcat_umask='0002'
+    $tomcat_umask='0002',
+    $tomcat_service_file_managed=true
   ) {
 
   if $tomcat_instance_number !~ /^[0-9]+$/ {
@@ -61,7 +62,8 @@ define tomcat::instance(
         tomcat_gzip_compression_min_size  => $tomcat_gzip_compression_min_size,
         java_home                         => $java_home,
         tomcat_use_umask                  => $tomcat_use_umask,
-        tomcat_umask                      => $tomcat_umask
+        tomcat_umask                      => $tomcat_umask,
+        tomcat_service_file_managed       => $tomcat_service_file_managed
       }
     }
     default: { fail("operatingsystem ${facts['os']['name']} is not supported") }
